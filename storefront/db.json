@@ -1,0 +1,100 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "Abe 02(SK)",
+      "price": 3500000,
+      "imageUrl": "https://via.placeholder.com/400x400.png?text=Product+1"
+    },
+    {
+      "id": 2,
+      "name": "Abe 02(BR)",
+      "price": 3800000,
+      "imageUrl": "https://via.placeholder.com/400x400.png?text=Product+2"
+    },
+    {
+      "id": 3,
+      "name": "Atomic 42(V)",
+      "price": 3200000,
+      "imageUrl": "https://via.placeholder.com/400x400.png?text=Product+3"
+    },
+    {
+      "id": 4,
+      "name": "Era 01",
+      "price": 4100000,
+      "imageUrl": "https://via.placeholder.com/400x400.png?text=Product+4"
+    },
+    {
+      "id": 5,
+      "name": "Era T7",
+      "price": 4500000,
+      "imageUrl": "https://via.placeholder.com/400x400.png?text=Product+5"
+    },
+    {
+      "id": 6,
+      "name": "Coroni 01",
+      "price": 3900000,
+      "imageUrl": "https://via.placeholder.com/400x400.png?text=Product+6"
+    },
+    {
+      "id": 7,
+      "name": "Vision X1",
+      "price": 2990000,
+      "imageUrl": "https://via.placeholder.com/400x400.png?text=Product+7"
+    },
+    {
+      "id": 8,
+      "name": "Vision X2",
+      "price": 3150000,
+      "imageUrl": "https://via.placeholder.com/400x400.png?text=Product+8"
+    },
+    {
+      "id": 9,
+      "name": "Vision X3",
+      "price": 3300000,
+      "imageUrl": "https://via.placeholder.com/400x400.png?text=Product+9"
+    },
+    {
+      "id": 10,
+      "name": "Vision X4",
+      "price": 3450000,
+      "imageUrl": "https://via.placeholder.com/400x400.png?text=Product+10"
+    },
+    {
+      "id": 11,
+      "name": "Vision X5",
+      "price": 3600000,
+      "imageUrl": "https://via.placeholder.com/400x400.png?text=Product+11"
+    },
+    {
+      "id": 12,
+      "name": "Vision X6",
+      "price": 3750000,
+      "imageUrl": "https://via.placeholder.com/400x400.png?text=Product+12"
+    },
+    {
+      "id": 13,
+      "name": "Vision X7",
+      "price": 3900000,
+      "imageUrl": "https://via.placeholder.com/400x400.png?text=Product+13"
+    },
+    {
+      "id": 14,
+      "name": "Vision X8",
+      "price": 4050000,
+      "imageUrl": "https://via.placeholder.com/400x400.png?text=Product+14"
+    },
+    {
+      "id": 15,
+      "name": "Vision X9",
+      "price": 4200000,
+      "imageUrl": "https://via.placeholder.com/400x400.png?text=Product+15"
+    },
+    {
+      "id": 16,
+      "name": "Vision X10",
+      "price": 4350000,
+      "imageUrl": "https://via.placeholder.com/400x400.png?text=Product+16"
+    }
+  ]
+}
