@@ -22,12 +22,12 @@
         </div>
 
         <div class="col-span-2 flex items-center justify-end gap-6">
-          <a
-            href="#"
+          <NuxtLink
+            to="/login"
             class="text-xs lg:text-sm font-medium tracking-wider uppercase transition-colors hover:text-gray-500 text-black"
           >
             Login
-          </a>
+          </NuxtLink>
           <a
             href="#"
             class="text-xs lg:text-sm font-medium tracking-wider uppercase transition-colors hover:text-gray-500 text-black"
