@@ -3,5 +3,7 @@
     <NuxtLayout>
       <NuxtPage />
     </NuxtLayout>
+
+    <CartDrawer />
   </UApp>
 </template>

@@ -28,16 +28,21 @@
           >
             Login
           </NuxtLink>
-          <a
-            href="#"
+          <button
+            type="button"
+            @click="cartStore.openCart"
             class="text-xs lg:text-sm font-medium tracking-wider uppercase transition-colors hover:text-gray-500 text-black"
           >
-            Bag (0)
-          </a>
+            Bag [{{ cartStore.itemCount }}]
+          </button>
         </div>
       </div>
     </div>
   </header>
 </template>
 
-<script setup></script>
+<script setup>
+import { useCartStore } from "~/stores/cart";
+
+const cartStore = useCartStore();
+</script>
