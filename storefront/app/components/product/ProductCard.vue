@@ -29,15 +29,5 @@
 
 <script setup>
 const { product } = defineProps(["product"]);
-// Bỏ console.log (hoặc giữ lại nếu bạn muốn debug)
-
-const formatPrice = (price) => {
-  if (typeof price !== "number") {
-    return price; // Trả về nguyên bản nếu không phải là số
-  }
-  return new Intl.NumberFormat("vi-VN", {
-    style: "currency",
-    currency: "VND",
-  }).format(price);
-};
+import { formatPrice } from "~/utils/format";
 </script>

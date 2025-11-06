@@ -9,7 +9,7 @@ export const useCartStore = defineStore("cart", {
           id: 1,
           name: "Gaia B2",
           price: 498000,
-          imageUrl: "https://via.placeholder.com/300", // Thay bằng link ảnh thật
+          imageUrl: "https://via.placeholder.com/300",
         },
         quantity: 1,
       },
@@ -23,11 +23,10 @@ export const useCartStore = defineStore("cart", {
         quantity: 2,
       },
     ],
+    appliedCoupon: null,
   }),
 
-  // Getters để tính toán dữ liệu
   getters: {
-    // Bỏ khai báo kiểu `: number`
     itemCount(state) {
       return state.items.reduce((total, item) => total + item.quantity, 0);
     },
@@ -36,6 +35,18 @@ export const useCartStore = defineStore("cart", {
       return state.items.reduce((total, item) => {
         return total + item.product.price * item.quantity;
       }, 0);
+    },
+
+    discountAmount(state) {
+      if (!state.appliedCoupon || !state.appliedCoupon.discount) {
+        return 0;
+      }
+      const discountPercentage = state.appliedCoupon.discount;
+      return (this.subtotal * discountPercentage) / 100;
+    },
+
+    finalSubtotal(state) {
+      return this.subtotal - this.discountAmount;
     },
   },
 
@@ -76,6 +87,28 @@ export const useCartStore = defineStore("cart", {
 
     removeItem(productId) {
       this.items = this.items.filter((item) => item.product.id !== productId);
+    },
+
+    async applyCoupon(couponCode) {
+      console.log(1);
+
+      if (couponCode.toUpperCase() === "SALE10") {
+        const couponData = {
+          code: "SALE10",
+          discount: 10,
+        };
+        this.appliedCoupon = couponData;
+        console.log("Coupon Applied!");
+      } else {
+        this.appliedCoupon = null;
+        console.error("Invalid Coupon");
+        throw new Error("Invalid Coupon");
+      }
+    },
+
+    removeCoupon() {
+      this.appliedCoupon = null;
+      console.log("Coupon deleted");
     },
   },
 });
