@@ -1,5 +1,7 @@
 <template>
-  <div class="sticky top-24 flex flex-col bg-gray-100 text-black border-black border-2 p-4">
+  <div
+    class="sticky top-24 flex flex-col bg-gray-100 text-black border-black border-2 p-4"
+  >
     <div class="flex justify-between items-start">
       <h1 class="text-2xl font-bold uppercase">{{ product.name }}</h1>
     </div>
@@ -68,7 +70,6 @@
 </template>
 
 <script setup>
-// Toàn bộ <script setup> gần như giữ nguyên
 import { ref } from "vue";
 import { useCartStore } from "~/stores/cart";
 
@@ -80,7 +81,6 @@ const defaultVariant =
   product.variants.find((v) => v.inStock) || product.variants[0];
 const selectedVariant = ref(defaultVariant);
 
-// Hàm Format Price
 const formatPrice = (price) => {
   if (typeof price !== "number") return price;
   return new Intl.NumberFormat("vi-VN", {
@@ -89,7 +89,6 @@ const formatPrice = (price) => {
   }).format(price);
 };
 
-// Hàm Thêm vào giỏ
 const addToBag = () => {
   if (!selectedVariant.value.inStock) return;
 
@@ -97,7 +96,7 @@ const addToBag = () => {
     id: `${product.id}-${selectedVariant.value.id}`,
     name: `${product.name} (${selectedVariant.value.name})`,
     price: product.price,
-    imageUrl: product.images[0].url, // Lấy ảnh chính
+    imageUrl: product.images[0].url,
   };
 
   cartStore.addItem(productToAdd, 1);

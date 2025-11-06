@@ -87,16 +87,7 @@
 <script setup>
 import { useCartStore } from "~/stores/cart";
 import CartItem from "./CartItem.vue";
+import { formatPrice } from "~/utils/format";
 
 const cartStore = useCartStore();
-
-const formatPrice = (price) => {
-  if (typeof price !== "number") {
-    return price;
-  }
-  return new Intl.NumberFormat("vi-VN", {
-    style: "currency",
-    currency: "VND",
-  }).format(price);
-};
 </script>

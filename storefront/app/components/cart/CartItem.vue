@@ -47,8 +47,8 @@
 </template>
 
 <script setup>
-// Script không thay đổi
 import { useCartStore } from "~/stores/cart";
+import { formatPrice } from "~/utils/format";
 
 const { item } = defineProps(["item"]);
 const cartStore = useCartStore();
@@ -63,15 +63,5 @@ const decreaseQuantity = () => {
 
 const removeItem = () => {
   cartStore.removeItem(item.product.id);
-};
-
-const formatPrice = (price) => {
-  if (typeof price !== "number") {
-    return price;
-  }
-  return new Intl.NumberFormat("vi-VN", {
-    style: "currency",
-    currency: "VND",
-  }).format(price);
 };
 </script>
