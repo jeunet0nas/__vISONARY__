@@ -1,6 +1,6 @@
 <template>
   <div
-    class="border border-black group w-48 lg:w-52.5 mx-auto relative overflow-hidden"
+    class="border border-black group w-46 lg:w-52.5 mx-auto relative overflow-hidden"
   >
     <a href="#">
       <div class="aspect-square w-full overflow-hidden bg-gray-100">
