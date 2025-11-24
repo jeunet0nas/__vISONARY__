@@ -1,8 +1,8 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\CollectionController;
 use App\Http\Controllers\Admin\ColorController;
-use App\Models\Admin;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [AdminController::class, "login"])->name("admin.login");
@@ -20,6 +20,17 @@ Route::prefix('admin')->middleware('admin')->group(function(){
             'edit' => 'admin.colors.edit',
             'update' => 'admin.colors.update',
             'destroy' => 'admin.colors.destroy'
+        ]
+    ]);
+
+    Route::resource('collections', CollectionController::class, [
+        'names' => [
+            'index' => 'admin.collections.index',
+            'create' => 'admin.collections.create',
+            'store' => 'admin.collections.store',
+            'edit' => 'admin.collections.edit',
+            'update' => 'admin.collections.update',
+            'destroy' => 'admin.collections.destroy'
         ]
     ]);
 });

@@ -23,9 +23,9 @@
                     </a>
                 </li>
                 <li class="nav-item mt-2 mb-2">
-                    <a style="color: #a3a3a3; font-size: 1rem" class="nav-link d-flex align-items-center gap-2" aria-current="page" href="#">
+                    <a style="color: #a3a3a3; font-size: 1rem" class="nav-link d-flex align-items-center gap-2" aria-current="page" href="{{ route('admin.collections.index') }}">
                         <i class="fas fa-book"></i>
-                        Sách
+                        Quản lý Bộ sưu tập
                     </a>
                 </li>
                 <li class="nav-item mt-2 mb-2">

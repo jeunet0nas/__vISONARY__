@@ -105,7 +105,7 @@
 
 
         handleImageInputChanged('thumbnail', 'thumbnail_preview')
-        handleImageInputChanged('author_img', 'author_img_preview');
+        handleImageInputChanged('banner_img', 'banner_img_preview');
     </script>
     @yield('scripts')
 </html>
