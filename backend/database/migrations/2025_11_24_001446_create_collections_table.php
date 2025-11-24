@@ -12,7 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('collections', function (Blueprint $table) {
-            $table->id();
+            $table->id('collection_id');
+            $table->string('collection_name')->unique();
+            $table->string('slug')->unique();
+            $table->string('released');
+            $table->string('collection_desc');
+            $table->string('banner_img');
             $table->timestamps();
         });
     }

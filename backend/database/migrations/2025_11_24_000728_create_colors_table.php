@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('colors', function (Blueprint $table) {
-            $table->id();
+            $table->id('color_id');
+            $table->string('color_name')->unique(); 
             $table->timestamps();
         });
     }
