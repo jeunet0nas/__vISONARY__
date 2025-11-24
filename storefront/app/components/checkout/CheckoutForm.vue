@@ -210,7 +210,7 @@
               formData.paymentMethod === 'qr' ? 'text-black' : 'text-gray-400'
             "
           >
-            Thanh toán qua QR (Sandbox Test)
+            Thanh toán qua QR
           </span>
         </label>
       </div>
