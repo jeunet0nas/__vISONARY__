@@ -13,7 +13,7 @@
           class="col-span-6 h-full border-l-0 md:border-l-2 border-r-0 md:border-r-2 border-black flex items-center justify-center"
         >
           <span
-            class="text-2xl lg:text-5xl font-bold tracking-wider uppercase text-transparent"
+            class="text-2xl lg:text-xl font-bold tracking-wider uppercase text-black"
           >
             &nbsp;
           </span>

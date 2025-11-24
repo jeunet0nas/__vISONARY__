@@ -1,6 +1,6 @@
 <template>
   <div
-    class="border border-black group w-48 lg:w-52.5 mx-auto relative overflow-hidden"
+    class="border border-black group w-46 lg:w-52.5 mx-auto relative overflow-hidden"
   >
     <a href="#">
       <div class="aspect-square w-full overflow-hidden bg-gray-100">
@@ -29,15 +29,5 @@
 
 <script setup>
 const { product } = defineProps(["product"]);
-// Bỏ console.log (hoặc giữ lại nếu bạn muốn debug)
-
-const formatPrice = (price) => {
-  if (typeof price !== "number") {
-    return price; // Trả về nguyên bản nếu không phải là số
-  }
-  return new Intl.NumberFormat("vi-VN", {
-    style: "currency",
-    currency: "VND",
-  }).format(price);
-};
+import { formatPrice } from "~/utils/format";
 </script>

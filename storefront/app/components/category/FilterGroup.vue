@@ -27,13 +27,12 @@
 </template>
 
 <script setup>
-// Props từ cha (CategorySidebar)
 defineProps({
   title: String,
   options: Array,
   type: {
     type: String,
-    default: "checkbox", // Mặc định là checkbox
+    default: "checkbox",
   },
   showViewAll: Boolean,
 });

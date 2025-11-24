@@ -45,6 +45,5 @@
 </template>
 
 <script setup>
-// Nuxt sẽ tự động import FilterGroup.vue
 import FilterGroup from "./FilterGroup.vue";
 </script>
