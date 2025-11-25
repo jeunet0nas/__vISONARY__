@@ -101,10 +101,13 @@ class CollectionController extends Controller
     public function saveBannerImage($file){
         $image_name = time().'_'.$file->getClientOriginalName();
         $file->storeAs('images/collections', $image_name, 'public');
-        return 'storage/images/collections'.$image_name;
+        return 'storage/images/collections/'.$image_name;
     }
 
     public function removeBannerImageFromStorage($file){
+        if(empty($file)){
+            return;
+        }
         $path = public_path($file);
         if(File::exists($path)){
             File::delete($path);

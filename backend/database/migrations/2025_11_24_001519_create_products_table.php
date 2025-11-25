@@ -27,7 +27,6 @@ return new class extends Migration
             $table->string('third_img')->nullable();
             $table->string('fourth_img')->nullable();
             $table->boolean('status')->default(1);
-            $table->foreignId('color_id')->constrained('colors', 'color_id')->cascadeOnDelete();
             $table->foreignId('collection_id')->constrained('collections', 'collection_id')->cascadeOnDelete();
             $table->timestamps();
         });

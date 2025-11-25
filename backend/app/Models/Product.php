@@ -24,7 +24,6 @@ class Product extends Model
         'third_img',
         'fourth_img',
         'status',
-        'color_id',
         'collection_id'
     ];
 
@@ -32,8 +31,8 @@ class Product extends Model
         return $this->belongsTo(Collection::class, 'collection_id', 'collection_id');
     }
 
-    public function color(){
-        return $this->belongsTo(Color::class, 'color_id', 'color_id');
+    public function colors(){
+        return $this->belongsToMany(Color::class, 'color_product', 'product_id', 'color_id');
     }
 
     public function orders(){
