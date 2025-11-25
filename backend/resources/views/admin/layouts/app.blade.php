@@ -87,7 +87,7 @@
     <script>
         function readUrl(input, image){
             if(input.files && input.files[0]){
-                var reader = new FileReader();
+                let reader = new FileReader();
                 reader.onload = function(e){
                     document.getElementById(image).classList.remove('d-none');
                     document.getElementById(image).setAttribute('src', e.target.result);
@@ -105,7 +105,10 @@
 
 
         handleImageInputChanged('thumbnail', 'thumbnail_preview')
-        handleImageInputChanged('author_img', 'author_img_preview');
+        handleImageInputChanged('first_img', 'first_img_preview')
+        handleImageInputChanged('second_img', 'second_img_preview')
+        handleImageInputChanged('third_img', 'third_img_preview')
+        handleImageInputChanged('fourth_img', 'fourth_img_preview')
     </script>
     @yield('scripts')
 </html>

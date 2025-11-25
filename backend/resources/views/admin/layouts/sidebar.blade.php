@@ -17,21 +17,21 @@
                     </a>
                 </li>
                 <li class="nav-item mt-2 mb-2">
-                    <a style="color: #a3a3a3; font-size: 1rem" class="nav-link d-flex align-items-center gap-2" aria-current="page" href="#">
+                    <a style="color: #a3a3a3; font-size: 1rem" class="nav-link d-flex align-items-center gap-2" aria-current="page" href="{{ route('admin.colors.index') }}">
                         <i class="fas fa-address-card"></i>
-                        Tác giả
+                        Quản lý Màu
                     </a>
                 </li>
                 <li class="nav-item mt-2 mb-2">
-                    <a style="color: #a3a3a3; font-size: 1rem" class="nav-link d-flex align-items-center gap-2" aria-current="page" href="#">
+                    <a style="color: #a3a3a3; font-size: 1rem" class="nav-link d-flex align-items-center gap-2" aria-current="page" href="{{ route('admin.collections.index') }}">
                         <i class="fas fa-book"></i>
-                        Sách
+                        Quản lý Bộ sưu tập
                     </a>
                 </li>
                 <li class="nav-item mt-2 mb-2">
-                    <a style="color: #a3a3a3; font-size: 1rem" class="nav-link d-flex align-items-center gap-2" aria-current="page" href="#">
+                    <a style="color: #a3a3a3; font-size: 1rem" class="nav-link d-flex align-items-center gap-2" aria-current="page" href="{{ route('admin.products.index') }}">
                         <i class="fas fa-cart-shopping"></i>
-                        Hóa đơn
+                        Quản lý Sản phẩm
                     </a>
                 </li>
                 <li class="nav-item mt-2 mb-2">
