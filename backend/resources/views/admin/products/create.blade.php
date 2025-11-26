@@ -111,24 +111,6 @@
                                     @enderror
                                 </div>
 
-                                <label for="color_id" class="form-label">Màu*</label>
-                                <select name="color_id[]" id="color_id" multiple
-                                    class="form-control @error('color_id') is-invalid @enderror">
-                                    <option value="" disabled>Chọn màu</option>
-                                    @foreach ($colors as $color)
-                                        <option value="{{ $color->color_id }}"
-                                            @if(collect(old('color_id'))->contains($color->color_id)) selected @endif>
-                                            {{ $color->color_name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                @error('color_id')
-                                    <span class="invalid-feedback">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-
-
                                 <div class="mb-3">
                                     <label for="product_desc">Mô tả chung*</label>
                                     <textarea rows="10" class="form-control @error('product_desc') is-invalid @enderror" id="product_desc" name="product_desc" placeholder="Mô tả sản phẩm">

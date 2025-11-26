@@ -28,7 +28,7 @@
                                 <th scope="col">BST</th>
                                 <th scope="col">SL</th>
                                 <th scope="col">Giá</th>
-                                <th scope="col">Màu sắc</th>
+                                {{-- <th scope="col">Màu sắc</th> --}}
                                 <th scope="col">Trạng thái</th>
                                 <th scope="col"></th>
                             </tr>
@@ -52,13 +52,6 @@
                                     {{-- <td>
                                         <img src="{{asset($product->thumbnail)}}" alt="{{$product->thumbnail}}" class="img-fluid" width="60" height="60">
                                     </td> --}}
-                                    <td>
-                                        @foreach ($product->colors as $color)
-                                            <span class="badge bg-light text-dark">
-                                                {{ $color->color_name }}
-                                            </span>
-                                        @endforeach
-                                    </td>
                                     <td>
                                         @if ($product->status)
                                             <span class="badge bg-success p-2">

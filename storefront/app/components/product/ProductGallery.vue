@@ -11,7 +11,7 @@
       <Slide v-for="(image, index) in images" :key="image.id || index">
         <div class="carousel__item">
           <img
-            :src="image.url"
+            :src="image.src"
             :alt="image.alt || 'Product image'"
             class="w-full h-full object-cover aspect-square"
           />
@@ -40,7 +40,7 @@
           @click="slideTo(index)"
         >
           <img
-            :src="image.url"
+            :src="image.src"
             :alt="image.alt || `Thumbnail ${index + 1}`"
             class="w-full h-full object-cover aspect-square"
           />
@@ -55,7 +55,12 @@ import { ref, watch } from "vue";
 import "vue3-carousel/dist/carousel.css";
 import { Carousel, Slide, Navigation } from "vue3-carousel";
 
-const { images } = defineProps(["images"]);
+const props = defineProps({
+  images: {
+    type: Array,
+    required: true,
+  },
+});
 
 // `currentSlide` sẽ đồng bộ cả 2 carousel
 const currentSlide = ref(0);

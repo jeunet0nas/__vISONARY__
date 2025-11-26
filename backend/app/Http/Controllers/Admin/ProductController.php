@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\AddProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Models\Collection;
-use App\Models\Color;
 use App\Models\Product;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
@@ -19,7 +18,7 @@ class ProductController extends Controller
     public function index()
     {
         return view('admin.products.index')->with([
-            'products' => Product::with('collection', 'colors')->latest()->get()
+            'products' => Product::with('collection')->latest()->get()
         ]);
     }
 
@@ -29,10 +28,8 @@ class ProductController extends Controller
     public function create()
     {
         $collections = Collection::all();
-        $colors = Color::all();
         return view('admin.products.create')->with([
             'collections' => $collections,
-            'colors' => $colors
         ]);
     }
 
@@ -60,7 +57,6 @@ class ProductController extends Controller
 
             $data['slug'] = Str::slug($req->product_name);
             $product = Product::create($data);
-            $product->colors()->sync($req->color_id);
 
             return redirect()->route('admin.products.index')->with([
                 'success' => 'Sản phẩm mới đã được thêm thành công'
@@ -82,10 +78,8 @@ class ProductController extends Controller
     public function edit(Product $product)
     {
         $collections = Collection::all();
-        $colors = Color::all();
         return view('admin.products.edit')->with([
             'collections' => $collections,
-            'colors' => $colors,
             'product' => $product
         ]);
     }
@@ -121,7 +115,6 @@ class ProductController extends Controller
             $data['slug'] = Str::slug($req->product_name);
             $data['status'] = $req->status;
             $product->update($data);
-            $product->colors()->sync($req->color_id);
             return redirect()->route('admin.products.index')->with([
                 'success' => "Sản phẩm đã được cập nhật thành công!"
             ]);
