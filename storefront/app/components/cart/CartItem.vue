@@ -47,7 +47,7 @@
 </template>
 
 <script setup>
-import { useCartStore } from "~/stores/cart";
+import { useCartStore } from "~/stores/useCartStore";
 import { formatPrice } from "~/utils/format";
 
 const { item } = defineProps(["item"]);

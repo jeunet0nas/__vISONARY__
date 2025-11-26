@@ -39,6 +39,7 @@
       <div>
         <button
           @click="addToBag"
+          :disabled="product.status === 0 || product.product_qty === 0"
           class="w-full bg-black text-white p-4 font-semibold uppercase hover:bg-gray-800 disabled:bg-gray-300 disabled:cursor-not-allowed"
         >
           ADD TO BAG
@@ -50,7 +51,7 @@
 
 <script setup>
 import { ref } from "vue";
-import { useCartStore } from "~/stores/cart";
+import { useCartStore } from "~/stores/useCartStore";
 import { formatPrice } from "../../utils/format";
 
 const props = defineProps({
@@ -67,6 +68,7 @@ const addToBag = () => {
     id: product.product_id,
     name: product.product_name,
     price: product.product_price,
+    qty: product.product_qty,
     imageUrl: product.thumbnail,
   };
   cartStore.addItem(productToAdd, 1);

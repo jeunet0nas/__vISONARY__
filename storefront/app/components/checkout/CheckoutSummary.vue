@@ -46,7 +46,7 @@
 
 <script setup>
 import { ref } from "vue";
-import { useCartStore } from "~/stores/cart";
+import { useCartStore } from "~/stores/useCartStore";
 import CartItem from "~/components/cart/CartItem.vue";
 import { formatPrice } from "~/utils/format";
 
