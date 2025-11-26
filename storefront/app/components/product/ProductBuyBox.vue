@@ -3,20 +3,30 @@
     class="sticky top-24 flex flex-col bg-gray-100 text-black border-black border-2 p-4"
   >
     <div class="flex justify-between items-start">
-      <h1 class="text-2xl font-bold uppercase">{{ product.name }}</h1>
+      <h1 class="text-2xl font-bold uppercase">
+        {{ product.product_name }}
+      </h1>
     </div>
 
     <div class="mt-2">
-      <p class="text-lg">
-        {{ formatPrice(product.price) }}
-        <span class="text-sm text-gray-500 ml-2">{{ product.status }}</span>
+      <p class="text-lg flex items-center gap-2">
+        {{ formatPrice(product.product_price) }}
+        <span v-if="product.status !== 1" class="text-sm text-gray-500 ml-2">
+          {{ product.status }}
+        </span>
+        <span
+          v-if="product.status === 0"
+          class="ml-4 inline-block px-3 py-1 rounded bg-black text-white text-xs font-semibold uppercase tracking-wide"
+        >
+          Out of stock
+        </span>
       </p>
     </div>
 
     <hr class="border-black my-4" />
 
     <div class="space-y-2">
-      <p class="text-sm leading-relaxed">{{ product.description }}</p>
+      <p class="text-sm leading-relaxed">{{ product.product_desc }}</p>
       <a href="#" class="text-sm font-bold underline inline-block">Read more</a>
     </div>
 
@@ -27,39 +37,8 @@
 
     <div class="border border-black p-4 mt-6 space-y-4 bg-white">
       <div>
-        <h3 class="text-sm font-semibold">
-          {{ selectedVariant.name }}
-        </h3>
-
-        <div class="flex space-x-2 mt-2">
-          <button
-            v-for="variant in product.variants"
-            :key="variant.id"
-            @click="selectedVariant = variant"
-            :disabled="!variant.inStock"
-            class="w-10 h-10 border"
-            :class="[
-              selectedVariant.id === variant.id
-                ? 'border-black'
-                : 'border-gray-200',
-              !variant.inStock
-                ? 'opacity-50 cursor-not-allowed line-through'
-                : '',
-            ]"
-          >
-            <span class="text-xs">{{ variant.name.substring(0, 1) }}</span>
-          </button>
-        </div>
-
-        <p class="text-sm text-gray-600 mt-2">
-          {{ selectedVariant.variantDescription }}
-        </p>
-      </div>
-
-      <div>
         <button
           @click="addToBag"
-          :disabled="!selectedVariant.inStock"
           class="w-full bg-black text-white p-4 font-semibold uppercase hover:bg-gray-800 disabled:bg-gray-300 disabled:cursor-not-allowed"
         >
           ADD TO BAG
@@ -72,33 +51,24 @@
 <script setup>
 import { ref } from "vue";
 import { useCartStore } from "~/stores/cart";
+import { formatPrice } from "../../utils/format";
 
-const { product } = defineProps(["product"]);
+const props = defineProps({
+  product: {
+    type: Object,
+    required: true,
+  },
+});
+const { product } = props;
 const cartStore = useCartStore();
 
-// State cục bộ: Lưu trữ variant đang được chọn
-const defaultVariant =
-  product.variants.find((v) => v.inStock) || product.variants[0];
-const selectedVariant = ref(defaultVariant);
-
-const formatPrice = (price) => {
-  if (typeof price !== "number") return price;
-  return new Intl.NumberFormat("vi-VN", {
-    style: "currency",
-    currency: "VND",
-  }).format(price);
-};
-
 const addToBag = () => {
-  if (!selectedVariant.value.inStock) return;
-
   const productToAdd = {
-    id: `${product.id}-${selectedVariant.value.id}`,
-    name: `${product.name} (${selectedVariant.value.name})`,
-    price: product.price,
-    imageUrl: product.images[0].url,
+    id: product.product_id,
+    name: product.product_name,
+    price: product.product_price,
+    imageUrl: product.thumbnail,
   };
-
   cartStore.addItem(productToAdd, 1);
   cartStore.openCart();
 };

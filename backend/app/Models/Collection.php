@@ -19,7 +19,7 @@ class Collection extends Model
     ];
 
     public function products(){
-        return $this->hasMany(Product::class, 'product_id', 'product_id');
+        return $this->hasMany(Product::class, 'collection_id', 'collection_id');
     }
 
     public function getRouteKeyName(){

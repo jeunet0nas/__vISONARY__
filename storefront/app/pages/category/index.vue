@@ -18,4 +18,9 @@ import PageHeader from "~/components/shared/PageHeader.vue";
 import Spacer from "~/components/shared/Spacer.vue";
 import CategorySidebar from "~/components/category/CategorySidebar.vue";
 import ProductGrid from "~/components/category/ProductGrid.vue";
+import { onMounted } from "vue";
+import { useProductsStore } from "~/stores/useProductsStore";
+
+const productsStore = useProductsStore()
+onMounted(() => productsStore.fetchAllProducts())
 </script>
