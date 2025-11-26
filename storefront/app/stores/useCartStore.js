@@ -7,6 +7,7 @@ export const useCartStore = defineStore("cart", {
     items: [],
     appliedCoupon: null,
   }),
+  persist: true,
 
   getters: {
     itemCount(state) {
