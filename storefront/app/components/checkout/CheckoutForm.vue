@@ -256,7 +256,7 @@
 
 <script setup>
 import { ref, computed } from "vue";
-import { useCartStore } from "~/stores/cart";
+import { useCartStore } from "~/stores/useCartStore";
 
 const cartStore = useCartStore();
 const couponCode = ref("");

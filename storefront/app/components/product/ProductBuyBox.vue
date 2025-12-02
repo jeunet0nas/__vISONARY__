@@ -4,18 +4,21 @@
   >
     <div class="flex justify-between items-start">
       <h1 class="text-2xl font-bold uppercase">
-        {{ product.product_name }}
+        {{ props.product.product_name }}
       </h1>
     </div>
 
     <div class="mt-2">
       <p class="text-lg flex items-center gap-2">
-        {{ formatPrice(product.product_price) }}
-        <span v-if="product.status !== 1" class="text-sm text-gray-500 ml-2">
-          {{ product.status }}
+        {{ formatPrice(props.product.product_price) }}
+        <span
+          v-if="props.product.status !== 1"
+          class="text-sm text-gray-500 ml-2"
+        >
+          {{ props.product.status }}
         </span>
         <span
-          v-if="product.status === 0"
+          v-if="props.product.status === 0"
           class="ml-4 inline-block px-3 py-1 rounded bg-black text-white text-xs font-semibold uppercase tracking-wide"
         >
           Out of stock
@@ -26,7 +29,7 @@
     <hr class="border-black my-4" />
 
     <div class="space-y-2">
-      <p class="text-sm leading-relaxed">{{ product.product_desc }}</p>
+      <p class="text-sm leading-relaxed">{{ props.product.product_desc }}</p>
       <a href="#" class="text-sm font-bold underline inline-block">Read more</a>
     </div>
 
@@ -39,6 +42,9 @@
       <div>
         <button
           @click="addToBag"
+          :disabled="
+            props.product.status === 0 || props.product.product_qty === 0
+          "
           class="w-full bg-black text-white p-4 font-semibold uppercase hover:bg-gray-800 disabled:bg-gray-300 disabled:cursor-not-allowed"
         >
           ADD TO BAG
@@ -50,7 +56,7 @@
 
 <script setup>
 import { ref } from "vue";
-import { useCartStore } from "~/stores/cart";
+import { useCartStore } from "~/stores/useCartStore";
 import { formatPrice } from "../../utils/format";
 
 const props = defineProps({
@@ -59,15 +65,15 @@ const props = defineProps({
     required: true,
   },
 });
-const { product } = props;
 const cartStore = useCartStore();
 
 const addToBag = () => {
   const productToAdd = {
-    id: product.product_id,
-    name: product.product_name,
-    price: product.product_price,
-    imageUrl: product.thumbnail,
+    id: props.product.product_id,
+    name: props.product.product_name,
+    price: props.product.product_price,
+    qty: props.product.product_qty,
+    imageUrl: props.product.thumbnail,
   };
   cartStore.addItem(productToAdd, 1);
   cartStore.openCart();

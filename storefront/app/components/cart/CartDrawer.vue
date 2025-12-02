@@ -85,7 +85,7 @@
 </style>
 
 <script setup>
-import { useCartStore } from "~/stores/cart";
+import { useCartStore } from "~/stores/useCartStore";
 import CartItem from "./CartItem.vue";
 import { formatPrice } from "~/utils/format";
 

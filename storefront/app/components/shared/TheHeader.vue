@@ -48,7 +48,7 @@
 </template>
 
 <script setup>
-import { useCartStore } from "~/stores/cart";
+import { useCartStore } from "~/stores/useCartStore";
 
 const cartStore = useCartStore();
 </script>

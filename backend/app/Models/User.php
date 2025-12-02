@@ -60,7 +60,7 @@ class User extends Authenticatable
     }
 
     public function orders(){
-        return $this->hasMany(Order::class, 'customer_id', 'customer_id')->with('books')->latest();
+        return $this->hasMany(Order::class, 'customer_id', 'customer_id')->with('products')->latest();
     }
 
     public function reviews(){
