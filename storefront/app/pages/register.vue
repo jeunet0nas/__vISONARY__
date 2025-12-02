@@ -21,6 +21,7 @@
               autocomplete="name"
               required
               class="w-full px-3 py-2 border border-black focus:outline-none focus:ring-black focus:border-black text-black"
+              v-model="data.user.name"
             />
           </div>
         </div>
@@ -37,6 +38,7 @@
               autocomplete="email"
               required
               class="w-full px-3 py-2 border border-black focus:outline-none focus:ring-black focus:border-black text-black"
+              v-model="data.user.email"
             />
           </div>
         </div>
@@ -129,14 +131,39 @@
 </template>
 
 <script setup>
-// Tương tự trang Login, bạn nên tắt layout mặc định
 definePageMeta({
   layout: "auth",
 });
 
+import { da } from "@nuxt/ui/runtime/locale/index.js";
+import axios from "axios";
 import { ref } from "vue";
+import { BASE_URL } from "~/helpers/config";
+import { useAuthStore } from "~/stores/useAuthStore";
 const showPassword = ref(false);
 const showPasswordConfirm = ref(false);
+
+const authStore = useAuthStore();
+const data = reactive({
+  user: {
+    name: "",
+    email: "",
+    password: "",
+  },
+});
+
+const registerNewUser = async () => {
+  authStore.clearValidationError();
+  authStore.isLoading = true;
+
+  try {
+    const res = await axios.post(`${BASE_URL}/user/register`, data.user);
+  } catch (error) {
+  } finally {
+    isLoading = false;
+  }
+};
+
 const handleRegister = () => {
   console.log("Attempting to register...");
 };
