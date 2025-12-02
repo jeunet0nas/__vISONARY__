@@ -19,9 +19,11 @@
               name="name"
               type="text"
               autocomplete="name"
-              required
               class="w-full px-3 py-2 border border-black focus:outline-none focus:ring-black focus:border-black text-black"
-              v-model="data.user.name"
+              v-model="data.user.customer_name"
+            />
+            <ErrorMessage
+              :error="authStore.validationErrors.customer_name?.[0]"
             />
           </div>
         </div>
@@ -36,10 +38,10 @@
               name="email"
               type="email"
               autocomplete="email"
-              required
               class="w-full px-3 py-2 border border-black focus:outline-none focus:ring-black focus:border-black text-black"
               v-model="data.user.email"
             />
+            <ErrorMessage :error="authStore.validationErrors.email?.[0]" />
           </div>
         </div>
 
@@ -53,7 +55,7 @@
               name="password"
               :type="showPassword ? 'text' : 'password'"
               autocomplete="new-password"
-              required
+              v-model="data.user.password"
               class="w-full px-3 py-2 border border-black focus:outline-none focus:ring-black focus:border-black pr-10 text-black"
             />
             <div class="mt-2 flex items-center">
@@ -73,6 +75,7 @@
               </label>
             </div>
           </div>
+          <ErrorMessage :error="authStore.validationErrors.password?.[0]" />
         </div>
 
         <div>
@@ -88,7 +91,7 @@
               name="password_confirmation"
               :type="showPasswordConfirm ? 'text' : 'password'"
               autocomplete="new-password"
-              required
+              v-model="data.user.password_confirmation"
               class="w-full px-3 py-2 border border-black focus:outline-none focus:ring-black focus:border-black pr-10 text-black"
             />
             <div class="mt-2 flex items-center">
@@ -96,7 +99,7 @@
                 class="flex items-center space-x-2 cursor-pointer select-none"
               >
                 <input
-                  id="show-password"
+                  id="show-password_confirm"
                   type="checkbox"
                   v-model="showPasswordConfirm"
                   class="sr-only peer"
@@ -122,7 +125,11 @@
 
       <p class="text-sm text-center text-gray-600">
         Already have an account?
-        <NuxtLink to="/login" class="font-medium text-black hover:underline">
+        <NuxtLink
+          onclick="handleRegister"
+          to="/login"
+          class="font-medium text-black hover:underline"
+        >
           Sign in
         </NuxtLink>
       </p>
@@ -135,36 +142,54 @@ definePageMeta({
   layout: "auth",
 });
 
-import { da } from "@nuxt/ui/runtime/locale/index.js";
 import axios from "axios";
 import { ref } from "vue";
+import ErrorMessage from "~/components/shared/ErrorMessage.vue";
 import { BASE_URL } from "~/helpers/config";
 import { useAuthStore } from "~/stores/useAuthStore";
 const showPassword = ref(false);
 const showPasswordConfirm = ref(false);
 
+const toast = useToast();
+const router = useRouter();
 const authStore = useAuthStore();
 const data = reactive({
   user: {
-    name: "",
+    customer_name: "",
     email: "",
     password: "",
+    password_confirmation: "",
   },
 });
 
-const registerNewUser = async () => {
-  authStore.clearValidationError();
+onMounted(() => authStore.clearValidationErrors());
+
+const handleRegister = async () => {
+  if (data.user.password !== data.user.password_confirmation) {
+    toast.add({
+      title: "Lỗi",
+      description: "Mật khẩu và xác nhận mật khẩu không trùng khớp.",
+      color: "error",
+    });
+    return;
+  }
+  authStore.clearValidationErrors();
   authStore.isLoading = true;
 
   try {
     const res = await axios.post(`${BASE_URL}/user/register`, data.user);
+    toast.add({
+      title: "Thành công",
+      description: res.data.message,
+      color: "success",
+    });
+    router.push("/login");
   } catch (error) {
+    if (error.response && error.response.status === 422) {
+      authStore.setValidationErrors(error.response.data.errors);
+    }
   } finally {
-    isLoading = false;
+    authStore.isLoading = false;
   }
-};
-
-const handleRegister = () => {
-  console.log("Attempting to register...");
 };
 </script>

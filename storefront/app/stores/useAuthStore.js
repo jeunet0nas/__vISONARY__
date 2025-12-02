@@ -5,7 +5,7 @@ export const useAuthStore = defineStore("auth", {
     isLoggedIn: false,
     user: null,
     access_token: "",
-    validationErrors: null,
+    validationErrors: {},
     isLoading: false,
   }),
   persist: true,
@@ -25,8 +25,8 @@ export const useAuthStore = defineStore("auth", {
     setValidationErrors(errors) {
       this.validationErrors = errors;
     },
-    clearValidationError() {
-      this.validationErrors = null;
+    clearValidationErrors() {
+      this.validationErrors = {};
     },
   },
 });

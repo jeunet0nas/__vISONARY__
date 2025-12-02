@@ -23,5 +23,8 @@
     "vue": "^3.5.22",
     "vue-router": "^4.6.3",
     "vue3-carousel-nuxt": "^1.1.6"
+  },
+  "devDependencies": {
+    "@iconify-json/lucide": "^1.2.77"
   }
 }
