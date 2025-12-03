@@ -18,10 +18,10 @@
               id="email"
               name="email"
               type="email"
-              autocomplete="email"
-              required
+              v-model="data.user.email"
               class="w-full px-3 py-2 border border-black focus:outline-none focus:ring-black focus:border-black text-black"
             />
+            <ErrorMessage :error="authStore.validationErrors.email?.[0]" />
           </div>
         </div>
 
@@ -34,8 +34,7 @@
               id="password"
               name="password"
               :type="showPassword ? 'text' : 'password'"
-              autocomplete="current-password"
-              required
+              v-model="data.user.password"
               class="w-full px-3 py-2 border border-black focus:outline-none focus:ring-black focus:border-black text-black"
             />
           </div>
@@ -55,6 +54,7 @@
               <span class="text-sm text-gray-700">Show password</span>
             </label>
           </div>
+          <ErrorMessage :error="authStore.validationErrors.password?.[0]" />
         </div>
 
         <div class="flex items-center justify-end">
@@ -90,10 +90,53 @@ definePageMeta({
   layout: "auth",
 });
 
+import axios from "axios";
 import { ref } from "vue";
+import ErrorMessage from "~/components/shared/ErrorMessage.vue";
+import { BASE_URL } from "~/helpers/config";
 const showPassword = ref(false);
-const handleLogin = () => {
-  // Logic xử lý đăng nhập sẽ ở đây
-  console.log("Attempting to login...");
+
+const authStore = useAuthStore();
+const router = useRouter();
+const toast = useToast();
+
+const data = reactive({
+  user: {
+    email: "",
+    password: "",
+  },
+});
+
+onMounted(() => authStore.clearValidationErrors());
+
+const handleLogin = async () => {
+  authStore.clearValidationErrors();
+  authStore.isLoading = true;
+  try {
+    const res = await axios.post(`${BASE_URL}/user/login`, data.user);
+    if (res.data.error) {
+      toast.add({
+        title: "Đăng nhập thất bại!",
+        description: res.data.error,
+        color: "error",
+      });
+    } else {
+      authStore.setIsLoggedIn();
+      authStore.setUser(res.data.user);
+      authStore.setToken(res.data.access_token);
+      toast.add({
+        title: "Đăng nhập thành công!",
+        description: "Chào mừng bạn quay lại!",
+        color: "success",
+      });
+      router.push("/");
+    }
+  } catch (error) {
+    if (error.response && error.response.status === 422) {
+      authStore.setValidationErrors(error.response.data.errors);
+    }
+  } finally {
+    authStore.isLoading = false;
+  }
 };
 </script>

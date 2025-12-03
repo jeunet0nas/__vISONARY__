@@ -11,15 +11,21 @@
     "jserv": "json-server --watch db.json --port 3004"
   },
   "dependencies": {
+    "@nuxt/icon": "^2.1.0",
     "@nuxt/image": "^2.0.0",
     "@nuxt/ui": "^4.1.0",
     "@pinia/nuxt": "^0.11.3",
     "@tailwindcss/vite": "^4.1.16",
+    "axios": "^1.13.2",
     "nuxt": "^4.2.0",
     "pinia": "^3.0.4",
+    "pinia-plugin-persistedstate": "^4.7.1",
     "tailwindcss": "^4.1.16",
     "vue": "^3.5.22",
     "vue-router": "^4.6.3",
     "vue3-carousel-nuxt": "^1.1.6"
+  },
+  "devDependencies": {
+    "@iconify-json/lucide": "^1.2.77"
   }
 }

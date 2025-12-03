@@ -1,30 +1,13 @@
+import { it } from "@nuxt/ui/runtime/locale/index.js";
 import { defineStore } from "pinia";
 
 export const useCartStore = defineStore("cart", {
   state: () => ({
     isOpen: false,
-    items: [
-      {
-        product: {
-          id: 1,
-          name: "Gaia B2",
-          price: 498000,
-          imageUrl: "https://via.placeholder.com/300",
-        },
-        quantity: 1,
-      },
-      {
-        product: {
-          id: 2,
-          name: "Ruvy Van M09",
-          price: 399000,
-          imageUrl: "https://via.placeholder.com/300",
-        },
-        quantity: 2,
-      },
-    ],
+    items: [],
     appliedCoupon: null,
   }),
+  persist: true,
 
   getters: {
     itemCount(state) {
@@ -67,7 +50,10 @@ export const useCartStore = defineStore("cart", {
       );
 
       if (existingItem) {
-        existingItem.quantity += quantity;
+        const maxAdd = product.qty - existingItem.quantity;
+        if (maxAdd > 0) {
+          existingItem.quantity += Math.min(quantity, maxAdd);
+        }
       } else {
         this.items.push({ product, quantity });
       }
@@ -78,7 +64,7 @@ export const useCartStore = defineStore("cart", {
 
       if (item) {
         if (newQuantity > 0) {
-          item.quantity = newQuantity;
+          item.quantity = Math.min(newQuantity, item.product.qty);
         } else {
           this.removeItem(productId);
         }

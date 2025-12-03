@@ -6,11 +6,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasApiTokens;
     protected $table = 'customers';
     protected $primaryKey = 'customer_id';
 
@@ -59,7 +60,7 @@ class User extends Authenticatable
     }
 
     public function orders(){
-        return $this->hasMany(Order::class, 'customer_id', 'customer_id')->with('books')->latest();
+        return $this->hasMany(Order::class, 'customer_id', 'customer_id')->with('products')->latest();
     }
 
     public function reviews(){

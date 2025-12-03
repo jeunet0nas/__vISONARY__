@@ -24,16 +24,11 @@ class Product extends Model
         'third_img',
         'fourth_img',
         'status',
-        'color_id',
         'collection_id'
     ];
 
     public function collection(){
         return $this->belongsTo(Collection::class, 'collection_id', 'collection_id');
-    }
-
-    public function color(){
-        return $this->belongsTo(Color::class, 'color_id', 'color_id');
     }
 
     public function orders(){
