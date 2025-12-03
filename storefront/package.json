@@ -11,6 +11,7 @@
     "jserv": "json-server --watch db.json --port 3004"
   },
   "dependencies": {
+    "@nuxt/icon": "^2.1.0",
     "@nuxt/image": "^2.0.0",
     "@nuxt/ui": "^4.1.0",
     "@pinia/nuxt": "^0.11.3",

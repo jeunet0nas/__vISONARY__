@@ -17,7 +17,7 @@ export const useAuthStore = defineStore("auth", {
       this.user = user;
     },
     setToken(token) {
-      this.token = token;
+      this.access_token = token;
     },
     clearAuthData() {
       (this.isLoading = false), (this.user = null), (this.access_token = "");
