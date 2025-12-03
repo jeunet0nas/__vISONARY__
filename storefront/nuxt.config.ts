@@ -10,6 +10,7 @@ export default defineNuxtConfig({
     "vue3-carousel-nuxt",
     "@nuxt/image",
     "pinia-plugin-persistedstate/nuxt",
+    "@nuxt/icon",
   ],
   css: ["~/assets/css/main.css"],
   app: {

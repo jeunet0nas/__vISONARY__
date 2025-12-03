@@ -59,7 +59,7 @@ class UserController extends Controller
             $profile_img_name = time().'_'.$file->getClientOriginalName();
             $file->storeAs('images/users/', $profile_img_name, 'public');
             $req->user()->update([
-                'profile_img' => 'storage/images/users'.$profile_img_name
+                'profile_img' => 'storage/images/users/'.$profile_img_name
             ]);
 
             return response()->json([

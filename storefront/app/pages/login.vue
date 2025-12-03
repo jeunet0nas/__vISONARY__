@@ -18,7 +18,6 @@
               id="email"
               name="email"
               type="email"
-              autocomplete="email"
               v-model="data.user.email"
               class="w-full px-3 py-2 border border-black focus:outline-none focus:ring-black focus:border-black text-black"
             />
@@ -35,7 +34,6 @@
               id="password"
               name="password"
               :type="showPassword ? 'text' : 'password'"
-              autocomplete="current-password"
               v-model="data.user.password"
               class="w-full px-3 py-2 border border-black focus:outline-none focus:ring-black focus:border-black text-black"
             />
@@ -100,6 +98,7 @@ const showPassword = ref(false);
 
 const authStore = useAuthStore();
 const router = useRouter();
+const toast = useToast();
 
 const data = reactive({
   user: {
@@ -127,7 +126,7 @@ const handleLogin = async () => {
       authStore.setToken(res.data.access_token);
       toast.add({
         title: "Đăng nhập thành công!",
-        description: res.data.message,
+        description: "Chào mừng bạn quay lại!",
         color: "success",
       });
       router.push("/");

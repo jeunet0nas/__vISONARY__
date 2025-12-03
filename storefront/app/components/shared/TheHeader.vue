@@ -23,17 +23,50 @@
           <NuxtLink
             to="/"
             class="text-2xl lg:text-5xl font-bold tracking-wider uppercase text-black"
-            >VISIONARY
+          >
+            VISIONARY
           </NuxtLink>
         </div>
 
         <div class="col-span-2 flex items-center justify-end gap-6">
-          <NuxtLink
-            to="/login"
-            class="text-xs lg:text-sm font-medium tracking-wider uppercase transition-colors hover:text-gray-500 text-black"
-          >
-            Login
-          </NuxtLink>
+          <ClientOnly>
+            <template #fallback>
+              <span
+                class="text-xs lg:text-sm font-medium tracking-wider uppercase text-black"
+                >...</span
+              >
+            </template>
+
+            <div
+              v-if="authStore.access_token && authStore.user"
+              class="flex items-center gap-4"
+            >
+              <NuxtLink
+                to="/profile"
+                class="text-xs lg:text-sm font-bold tracking-wider uppercase text-black hover:underline truncate max-w-20 lg:max-w-[120px]"
+                :title="authStore.user.customer_name"
+              >
+                <Icon name="uil:github" style="color: black" />
+              </NuxtLink>
+
+              <button
+                type="button"
+                @click="handleLogout"
+                class="text-xs lg:text-sm font-medium tracking-wider uppercase transition-colors hover:text-red-600 text-gray-500"
+              >
+                [Logout]
+              </button>
+            </div>
+
+            <NuxtLink
+              v-else
+              to="/login"
+              class="text-xs lg:text-sm font-medium tracking-wider uppercase transition-colors hover:text-gray-500 text-black"
+            >
+              Login
+            </NuxtLink>
+          </ClientOnly>
+
           <button
             type="button"
             @click="cartStore.openCart"
@@ -49,6 +82,33 @@
 
 <script setup>
 import { useCartStore } from "~/stores/useCartStore";
+import { useAuthStore } from "~/stores/useAuthStore";
+import { headersConfig, BASE_URL } from "~/helpers/config";
+import axios from "axios";
 
 const cartStore = useCartStore();
+const authStore = useAuthStore();
+const toast = useToast();
+const router = useRouter();
+
+const handleLogout = async () => {
+  try {
+    await axios.post(
+      `${BASE_URL}/user/logout`,
+      null,
+      headersConfig(authStore.access_token)
+    );
+
+    toast.add({
+      title: "Đăng xuất thành công",
+      description: "Hẹn gặp lại bạn sớm!",
+      color: "info",
+    });
+  } catch (error) {
+    console.error("Logout API error:", error);
+  } finally {
+    authStore.clearAuthData();
+    router.push("/login");
+  }
+};
 </script>
