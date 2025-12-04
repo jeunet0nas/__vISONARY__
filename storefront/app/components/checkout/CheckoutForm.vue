@@ -4,37 +4,22 @@
     class="bg-gray-100 border border-black p-4 lg:p-6"
   >
     <div class="mb-6 text-black">
-      <h2 class="text-xl font-semibold uppercase mb-4">DELIVERY OPTIONS</h2>
+      <h2 class="text-xl font-semibold uppercase mb-4">THÔNG TIN VẬN CHUYỂN</h2>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-6">
-        <div>
+        <div class="md:col-span-2">
           <label
-            for="firstName"
+            for="fullName"
             class="block text-xs font-medium uppercase mb-1"
           >
-            First Name
+            Họ và Tên (Full Name)
           </label>
           <input
-            id="firstName"
-            v-model="formData.firstName"
+            id="fullName"
+            v-model="formData.fullName"
             type="text"
-            class="w-full border border-black p-3 text-sm"
-            required
-          />
-        </div>
-
-        <div>
-          <label
-            for="lastName"
-            class="block text-xs font-medium uppercase mb-1"
-          >
-            Last Name
-          </label>
-          <input
-            id="lastName"
-            v-model="formData.lastName"
-            type="text"
-            class="w-full border border-black p-3 text-sm"
+            class="w-full border border-black p-3 text-sm focus:outline-none focus:bg-white transition-colors"
+            placeholder="Ví dụ: Nguyen Van A"
             required
           />
         </div>
@@ -47,85 +32,65 @@
             id="email"
             v-model="formData.email"
             type="email"
-            class="w-full border border-black p-3 text-sm"
+            class="w-full border border-black p-3 text-sm focus:outline-none focus:bg-white transition-colors"
             required
           />
         </div>
 
         <div>
           <label for="phone" class="block text-xs font-medium uppercase mb-1">
-            Phone Number
+            Số điện thoại
           </label>
           <input
             id="phone"
-            v-model="formData.phone"
+            v-model="formData.phone_number"
             type="tel"
-            class="w-full border border-black p-3 text-sm"
+            class="w-full border border-black p-3 text-sm focus:outline-none focus:bg-white transition-colors"
             required
           />
         </div>
 
         <div class="md:col-span-2">
           <label for="address" class="block text-xs font-medium uppercase mb-1">
-            Shipping
+            Địa chỉ (Số nhà, Tên đường)
           </label>
           <input
             id="address"
             v-model="formData.address"
             type="text"
-            placeholder="Address"
-            class="w-full border border-black p-3 text-sm"
+            placeholder="Ví dụ: 123 Đường Lê Lợi"
+            class="w-full border border-black p-3 text-sm focus:outline-none focus:bg-white transition-colors"
             required
           />
         </div>
 
         <div>
           <label
-            for="postalCode"
-            class="block text-xs font-medium uppercase mb-1 sr-only"
+            for="province"
+            class="block text-xs font-medium uppercase mb-1"
           >
-            Postal Code
+            Phường / Xã / Quận
           </label>
           <input
-            id="postalCode"
-            v-model="formData.postalCode"
+            id="province"
+            v-model="formData.province"
             type="text"
-            placeholder="Postal Code"
-            class="w-full border border-black p-3 text-sm"
+            placeholder="Nhập phường, xã..."
+            class="w-full border border-black p-3 text-sm focus:outline-none focus:bg-white transition-colors"
             required
           />
         </div>
 
         <div>
-          <label
-            for="city"
-            class="block text-xs font-medium uppercase mb-1 sr-only"
-          >
-            City
+          <label for="city" class="block text-xs font-medium uppercase mb-1">
+            Tỉnh / Thành phố
           </label>
           <input
             id="city"
             v-model="formData.city"
             type="text"
-            placeholder="City"
-            class="w-full border border-black p-3 text-sm"
-            required
-          />
-        </div>
-
-        <div class="md:col-span-2">
-          <label
-            for="country"
-            class="block text-xs font-medium uppercase mb-1 sr-only"
-          >
-            Country
-          </label>
-          <input
-            id="country"
-            v-model="formData.country"
-            type="text"
-            placeholder="Country"
-            class="w-full border border-black p-3 text-sm"
+            placeholder="Nhập tỉnh, thành phố..."
+            class="w-full border border-black p-3 text-sm focus:outline-none focus:bg-white transition-colors"
             required
           />
         </div>
@@ -176,6 +141,7 @@
             Thanh toán khi nhận hàng (COD)
           </span>
         </label>
+
         <label
           class="flex items-center border p-4 cursor-pointer transition-colors"
           :class="{
@@ -210,7 +176,7 @@
               formData.paymentMethod === 'qr' ? 'text-black' : 'text-gray-400'
             "
           >
-            Thanh toán qua QR
+            Thanh toán qua QR / Banking
           </span>
         </label>
       </div>
@@ -223,7 +189,7 @@
           v-model="couponCode"
           type="text"
           placeholder="Enter coupon"
-          class="w-full border border-black p-3 text-sm"
+          class="w-full border border-black p-3 text-sm focus:outline-none"
           :disabled="!!cartStore.appliedCoupon"
         />
         <button
@@ -245,79 +211,157 @@
     <div>
       <button
         type="submit"
-        :disabled="!isFormValid"
-        class="w-full bg-black text-white p-4 font-semibold uppercase mt-6 hover:bg-gray-800 disabled:bg-gray-400 disabled:cursor-not-allowed"
+        :disabled="!isFormValid || isLoading"
+        class="w-full bg-black text-white p-4 font-semibold uppercase mt-6 hover:bg-gray-800 disabled:bg-gray-400 disabled:cursor-not-allowed flex justify-center items-center gap-2"
       >
-        CHECKOUT
+        <span
+          v-if="isLoading"
+          class="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"
+        ></span>
+        {{ isLoading ? "PROCESSING..." : "CHECKOUT" }}
       </button>
     </div>
   </form>
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed, onMounted, watch } from "vue";
+import { storeToRefs } from "pinia";
 import { useCartStore } from "~/stores/useCartStore";
+import { useAuthStore } from "~/stores/useAuthStore";
+import { useRouter } from "vue-router";
+import axios from "axios";
+import { BASE_URL, headersConfig } from "~/helpers/config";
 
 const cartStore = useCartStore();
+const authStore = useAuthStore();
+const { user, isLoggedIn } = storeToRefs(authStore);
+const router = useRouter();
+
+const isLoading = ref(false);
 const couponCode = ref("");
 const couponError = ref(null);
 
+// --- 1. FORM DATA ---
+// Gọn gàng hơn rất nhiều: firstName + lastName -> fullName
 const formData = ref({
-  firstName: "",
-  lastName: "",
+  fullName: "",
   email: "",
-  phone: "",
+  phone_number: "",
   address: "",
-  postalCode: "",
+  province: "",
   city: "",
-  country: "",
   paymentMethod: "cod",
 });
 
-const isFormValid = computed(() => {
-  const requiredFields = [
-    formData.value.firstName,
-    formData.value.lastName,
-    formData.value.email,
-    formData.value.address,
-    formData.value.phone,
-    formData.value.postalCode,
-    formData.value.city,
-    formData.value.country,
-  ];
+// --- 2. LOGIC AUTO-FILL (Đơn giản hóa) ---
+const fillUserData = () => {
+  if (isLoggedIn.value && user.value) {
+    const u = user.value;
 
-  return requiredFields.every((field) => field && field.trim() !== "");
+    // Map trực tiếp 1-1, không cần split/join nữa
+    formData.value.fullName = u.customer_name || "";
+    formData.value.email = u.email || "";
+    formData.value.phone_number = u.phone_number || "";
+    formData.value.address = u.address || "";
+    formData.value.province = u.province || "";
+    formData.value.city = u.city || "";
+  }
+};
+
+onMounted(fillUserData);
+watch(user, fillUserData);
+
+// --- 3. VALIDATION ---
+const isFormValid = computed(() => {
+  const f = formData.value;
+  return (
+    f.fullName && // Check fullName
+    f.email &&
+    f.address &&
+    f.phone_number &&
+    f.province &&
+    f.city
+  );
 });
 
-const handleSubmit = () => {
+// --- 4. SUBMIT LOGIC ---
+const handleSubmit = async () => {
   if (!isFormValid.value) {
     alert("Vui lòng điền đầy đủ thông tin giao hàng.");
     return;
   }
 
-  const orderPayload = {
-    customerDetails: { ...formData.value },
-    cartItems: cartStore.items.map((item) => ({
-      id: item.product.id,
-      name: item.product.name,
-      quantity: item.quantity,
-      price: item.product.price,
-    })),
-    total: cartStore.subtotal,
-  };
+  isLoading.value = true;
 
-  console.log("--- SUBMITTING ORDER ---", orderPayload);
-  alert("Đơn hàng đã được gửi đi (Kiểm tra Console Log)!");
+  try {
+    // Ghép địa chỉ full string
+    const fullAddress = [
+      formData.value.address,
+      formData.value.province,
+      formData.value.city,
+    ]
+      .filter(Boolean)
+      .join(", ");
+
+    const orderPayload = {
+      user_id: isLoggedIn.value ? user.value.id : null,
+
+      // Gửi thẳng fullName vào customer_name
+      customer_name: formData.value.fullName,
+      customer_email: formData.value.email,
+      customer_phone: formData.value.phone_number,
+      shipping_address: fullAddress,
+
+      shipping_details: {
+        city: formData.value.city,
+        province: formData.value.province,
+        address: formData.value.address,
+        phone_number: formData.value.phone_number,
+      },
+
+      items: cartStore.items.map((item) => ({
+        product_id: item.product.id,
+        quantity: item.quantity,
+        price: item.product.price,
+      })),
+
+      subtotal: cartStore.subtotal,
+      discount_amount: cartStore.discountAmount,
+      coupon_code: cartStore.appliedCoupon
+        ? cartStore.appliedCoupon.code
+        : null,
+      total_amount: cartStore.finalSubtotal,
+      payment_method: formData.value.paymentMethod,
+    };
+
+    console.log("--- SENDING PAYLOAD ---", orderPayload);
+
+    // Gọi API (Chỉ 1 lần gọi)
+    const config = isLoggedIn.value
+      ? headersConfig(authStore.access_token)
+      : {};
+    const res = await axios.post(`${BASE_URL}/orders`, orderPayload, config);
+
+    alert("Đặt hàng thành công! Mã đơn: " + res.data.order_code);
+    cartStore.$reset();
+    router.push("/profile/orders");
+  } catch (error) {
+    console.error(error);
+    const msg =
+      error.response?.data?.message || "Có lỗi xảy ra, vui lòng thử lại.";
+    alert(msg);
+  } finally {
+    isLoading.value = false;
+  }
 };
 
 const handleApplyCoupon = async () => {
-  console.log(1);
   couponError.value = null;
   if (!couponCode.value.trim()) {
     couponError.value = "Vui lòng nhập mã.";
     return;
   }
-
   try {
     await cartStore.applyCoupon(couponCode.value);
     couponCode.value = "";
