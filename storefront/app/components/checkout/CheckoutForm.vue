@@ -12,7 +12,7 @@
             for="fullName"
             class="block text-xs font-medium uppercase mb-1"
           >
-            Họ và Tên (Full Name)
+            Họ và Tên
           </label>
           <input
             id="fullName"
@@ -154,6 +154,7 @@
             v-model="formData.paymentMethod"
             value="qr"
             class="peer hidden"
+            disabled
           />
           <span
             class="w-5 h-5 mr-3 border-2 rounded-none flex items-center justify-center transition-colors"
@@ -184,23 +185,34 @@
 
     <div class="mb-6 text-black">
       <h2 class="text-xl font-semibold uppercase mb-4">DISCOUNT CODE</h2>
+
       <div class="flex gap-x-2">
         <input
           v-model="couponCode"
           type="text"
           placeholder="Enter coupon"
-          class="w-full border border-black p-3 text-sm focus:outline-none"
+          class="w-full border border-black p-3 text-sm focus:outline-none disabled:bg-gray-200 disabled:cursor-not-allowed"
           :disabled="!!cartStore.appliedCoupon"
         />
         <button
           type="button"
           @click="handleApplyCoupon"
           :disabled="!!cartStore.appliedCoupon"
-          class="bg-black text-white p-3 px-6 font-semibold uppercase hover:bg-gray-800 disabled:bg-gray-400"
+          class="bg-black text-white p-3 px-6 font-semibold uppercase hover:bg-gray-800 disabled:bg-gray-400 disabled:cursor-not-allowed"
         >
           APPLY
         </button>
       </div>
+
+      <p
+        v-if="cartStore.appliedCoupon"
+        class="text-green-600 text-sm mt-2 flex items-center gap-1"
+      >
+        <span
+          >Mã giảm giá đã được áp dụng - Giảm
+          {{ cartStore.appliedCoupon.discount }}%</span
+        >
+      </p>
       <p v-if="couponError" class="text-red-600 text-sm mt-2">
         {{ couponError }}
       </p>
@@ -242,8 +254,6 @@ const isLoading = ref(false);
 const couponCode = ref("");
 const couponError = ref(null);
 
-// --- 1. FORM DATA ---
-// Gọn gàng hơn rất nhiều: firstName + lastName -> fullName
 const formData = ref({
   fullName: "",
   email: "",
@@ -254,12 +264,10 @@ const formData = ref({
   paymentMethod: "cod",
 });
 
-// --- 2. LOGIC AUTO-FILL (Đơn giản hóa) ---
 const fillUserData = () => {
   if (isLoggedIn.value && user.value) {
     const u = user.value;
 
-    // Map trực tiếp 1-1, không cần split/join nữa
     formData.value.fullName = u.customer_name || "";
     formData.value.email = u.email || "";
     formData.value.phone_number = u.phone_number || "";
@@ -272,20 +280,13 @@ const fillUserData = () => {
 onMounted(fillUserData);
 watch(user, fillUserData);
 
-// --- 3. VALIDATION ---
 const isFormValid = computed(() => {
   const f = formData.value;
   return (
-    f.fullName && // Check fullName
-    f.email &&
-    f.address &&
-    f.phone_number &&
-    f.province &&
-    f.city
+    f.fullName && f.email && f.address && f.phone_number && f.province && f.city
   );
 });
 
-// --- 4. SUBMIT LOGIC ---
 const handleSubmit = async () => {
   if (!isFormValid.value) {
     alert("Vui lòng điền đầy đủ thông tin giao hàng.");
@@ -295,7 +296,6 @@ const handleSubmit = async () => {
   isLoading.value = true;
 
   try {
-    // Ghép địa chỉ full string
     const fullAddress = [
       formData.value.address,
       formData.value.province,
@@ -306,8 +306,6 @@ const handleSubmit = async () => {
 
     const orderPayload = {
       user_id: isLoggedIn.value ? user.value.id : null,
-
-      // Gửi thẳng fullName vào customer_name
       customer_name: formData.value.fullName,
       customer_email: formData.value.email,
       customer_phone: formData.value.phone_number,
@@ -362,11 +360,32 @@ const handleApplyCoupon = async () => {
     couponError.value = "Vui lòng nhập mã.";
     return;
   }
+  const convertCode = couponCode.value.trim().toUpperCase();
+
   try {
-    await cartStore.applyCoupon(couponCode.value);
-    couponCode.value = "";
+    const res = await axios.post(
+      `${BASE_URL}/apply/coupon`,
+      {
+        coupon_name: convertCode,
+        subtotal: cartStore.subtotal,
+      },
+      headersConfig(authStore.access_token)
+    );
+
+    if (res.data.coupon) {
+      cartStore.setAppliedCoupon({
+        code: res.data.coupon.coupon_name,
+        discount: res.data.coupon.discount,
+        min_total: res.data.coupon.min_total,
+        valid_until: res.data.coupon.valid_until,
+      });
+      couponCode.value = "";
+    } else {
+      couponError.value = res.data.error || "Không thể áp dụng mã giảm giá";
+    }
   } catch (error) {
-    couponError.value = error.message;
+    console.error("Apply coupon error:", error);
+    couponError.value = error.response?.data?.error || "Có lỗi xảy ra";
   }
 };
 </script>
