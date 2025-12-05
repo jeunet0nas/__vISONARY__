@@ -1,5 +1,6 @@
-import { it } from "@nuxt/ui/runtime/locale/index.js";
+import axios from "axios";
 import { defineStore } from "pinia";
+import { BASE_URL, headersConfig } from "~/helpers/config";
 
 export const useCartStore = defineStore("cart", {
   state: () => ({
@@ -75,26 +76,12 @@ export const useCartStore = defineStore("cart", {
       this.items = this.items.filter((item) => item.product.id !== productId);
     },
 
-    async applyCoupon(couponCode) {
-      console.log(1);
-
-      if (couponCode.toUpperCase() === "SALE10") {
-        const couponData = {
-          code: "SALE10",
-          discount: 10,
-        };
-        this.appliedCoupon = couponData;
-        console.log("Coupon Applied!");
-      } else {
-        this.appliedCoupon = null;
-        console.error("Invalid Coupon");
-        throw new Error("Invalid Coupon");
-      }
+    setAppliedCoupon(coupon) {
+      this.appliedCoupon = coupon;
     },
 
     removeCoupon() {
       this.appliedCoupon = null;
-      console.log("Coupon deleted");
     },
   },
 });
