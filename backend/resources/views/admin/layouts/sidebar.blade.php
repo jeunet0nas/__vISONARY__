@@ -35,9 +35,9 @@
                     </a>
                 </li>
                 <li class="nav-item mt-2 mb-2">
-                    <a style="color: #a3a3a3; font-size: 1rem" class="nav-link d-flex align-items-center gap-2" aria-current="page" href="#">
+                    <a style="color: #a3a3a3; font-size: 1rem" class="nav-link d-flex align-items-center gap-2" aria-current="page" href="{{ route('admin.orders.index') }}">
                         <i class="fas fa-comment"></i>
-                        Đánh giá
+                        Quản lý đơn hàng
                     </a>
                 </li>
                 <li class="nav-item mt-2 mb-2">

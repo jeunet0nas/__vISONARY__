@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\CollectionController;
 use App\Http\Controllers\Admin\CouponController;
+use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProductController;
 use Illuminate\Support\Facades\Route;
 
@@ -45,4 +46,9 @@ Route::prefix('admin')->middleware('admin')->group(function(){
             'destroy' => 'admin.coupons.destroy'
         ]
     ]);
+
+    Route::get('orders', [OrderController::class, 'index'])->name('admin.orders.index');
+    Route::get('orders/{order}', [OrderController::class, 'show'])->name('admin.orders.show');
+    Route::get('orders/{order}/update', [OrderController::class, 'updateDeliveredDate'])->name('admin.orders.update');
+    Route::delete('orders/{order}', [OrderController::class, 'destroy'])->name('admin.orders.delete');
 });
