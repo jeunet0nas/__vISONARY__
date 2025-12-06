@@ -61,8 +61,8 @@
 
     <script>
         $(document).ready(function() {
-            //datatables
-            $('.table').DataTable();
+            //datatables - only init tables that don't have 'no-datatables' class
+            $('.table:not(.no-datatables)').DataTable();
             //summernote
             $('.summernote').summernote();
             //Display summernote dropdown menu
