@@ -5,10 +5,9 @@
 @endsection
 
 @section('content')
-<div class="row">
-    @include('admin.layouts.sidebar')
-    <div class="col-md-9">
-        <div class="row mt-2">
+@include('admin.layouts.sidebar')
+<div class="col-md-9">
+    <div class="row mt-2">
             <div class="col-md-12">
                 <!-- Header Card -->
                 <div class="card border-0 shadow-sm mb-3">
@@ -27,7 +26,7 @@
 
                 <!-- Form Card -->
                 <div class="card border-0 shadow-sm">
-                    <div class="card-body p-4">-4">
+                    <div class="card-body p-4">
                     <div class="row">
                         <div class="col-md-8 mx-auto">
                             <form action="{{route('admin.products.store')}}" method="post" enctype="multipart/form-data">
@@ -40,7 +39,7 @@
 
                                 <div class="row">
                                     <div class="col-md-8">
-                                        <div class="form-floating mb-3">g mb-3">
+                                        <div class="form-floating mb-3">
                                             <input type="text" class="form-control @error('product_name') is-invalid @enderror" id="product_name" name="product_name" placeholder="Tên sản phẩm"
                                             value="{{old('product_name')}}">
                                             <label for="product_name">Tên sản phẩm*</label>
@@ -52,7 +51,7 @@
                                         </div>
                                     </div>
                                     <div class="col-md-4">
-                                        <div class="form-floating mb-3">g mb-3">
+                                        <div class="form-floating mb-3">
                                             <input type="number" class="form-control @error('released_at') is-invalid @enderror" id="released_at" name="released_at" placeholder="Năm ra mắt"
                                             value="{{old('released_at')}}">
                                             <label for="released_at">Năm ra mắt*</label>
@@ -84,7 +83,7 @@
 
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <div class="form-floating mb-3">g mb-3">
+                                        <div class="form-floating mb-3">
                                             <input type="number" class="form-control @error('product_qty') is-invalid @enderror" id="product_qty" name="product_qty" placeholder="Số lượng"
                                             value="{{old('product_qty')}}">
                                             <label for="product_qty">Số lượng*</label>
@@ -96,7 +95,7 @@
                                         </div>
                                     </div>
                                     <div class="col-md-6">
-                                        <div class="form-floating mb-3">g mb-3">
+                                        <div class="form-floating mb-3">
                                             <input type="number" class="form-control @error('product_price') is-invalid @enderror" id="product_price" name="product_price" placeholder="Giá sản phẩm"
                                             value="{{old('product_price')}}">
                                             <label for="product_price">Giá bán*</label>
@@ -116,7 +115,7 @@
 
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <div class="mb-3">="mb-3">
+                                        <div class="mb-3">
                                             <label for="shape" class="form-label">Loại dáng*</label>
                                             <select name="shape" id="shape" class="form-select @error('shape') is-invalid @enderror">
                                                 <option value="Vuông" {{ old('shape') == 'Vuông' ? 'selected' : '' }}>Vuông</option>
@@ -134,7 +133,7 @@
                                         </div>
                                     </div>
                                     <div class="col-md-6">
-                                        <div class="mb-3">="mb-3">
+                                        <div class="mb-3">
                                             <label for="material" class="form-label">Chất liệu*</label>
                                             <select name="material" id="material" class="form-select @error('material') is-invalid @enderror">
                                                 <option value="Acetate" {{ old('material') == 'Acetate' ? 'selected' : '' }}>Acetate</option>
@@ -157,7 +156,7 @@
                                 </h5>
 
                                 <div class="mb-3">
-                                    <label for="product_desc" class="form-label">Mô tả chi tiết*</label>ô tả chi tiết*</label>
+                                    <label for="product_desc" class="form-label">Mô tả chi tiết*</label>
                                     <textarea rows="6" class="form-control @error('product_desc') is-invalid @enderror" id="product_desc" name="product_desc" placeholder="Nhập mô tả chi tiết về sản phẩm...">{{old('product_desc')}}</textarea>
                                     @error('product_desc')
                                         <span class="invalid-feedback">
@@ -235,7 +234,7 @@
                                     </div>
                                 </div>
 
-                                <div class="d-flex justify-content-between align-items-center pt-3 border-top"> justify-content-between align-items-center pt-3 border-top">
+                                <div class="d-flex justify-content-between align-items-center pt-3 border-top">
                                     <a href="{{route('admin.products.index')}}" class="btn btn-outline-secondary">
                                         <i class="fas fa-times me-2"></i>Hủy
                                     </a>

@@ -5,10 +5,9 @@
 @endsection
 
 @section('content')
-<div class="row">
-    @include('admin.layouts.sidebar')
-    <div class="col-md-9">
-        <div class="row mt-2">
+@include('admin.layouts.sidebar')
+<div class="col-md-9">
+    <div class="row mt-2">
             <div class="col-md-12">
                 <!-- Header Card -->
                 <div class="card border-0 shadow-sm mb-3">
@@ -103,7 +102,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
         </div>
     </div>
 </div>

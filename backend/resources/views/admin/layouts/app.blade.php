@@ -20,8 +20,10 @@
     <!-- header here -->
     @include('admin.layouts.header')
     <div class="container-fluid">
-      <!-- content here -->
-    @yield('content')
+      <div class="row">
+        <!-- content here -->
+        @yield('content')
+      </div>
     </div>
     <!-- Jquery JS -->
     <script

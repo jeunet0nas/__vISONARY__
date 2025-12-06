@@ -1,14 +1,13 @@
 @extends('admin.layouts.app')
 
 @section('title')
-    Chi tiết đơn hàng #{{$order->order_id}}
+    Chi tiết đơn hàng
 @endsection
 
 @section('content')
-<div class="row">
-    @include('admin.layouts.sidebar')
-    <div class="col-md-9">
-        <div class="row mt-2">
+@include('admin.layouts.sidebar')
+<div class="col-md-9">
+    <div class="row mt-2">
             <div class="col-md-12">
                 <!-- Header -->
                 <div class="card border-0 shadow-sm mb-3">

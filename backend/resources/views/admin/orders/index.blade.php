@@ -1,14 +1,13 @@
 @extends('admin.layouts.app')
 
 @section('title')
-    Hóa đơn
+    Đơn hàng
 @endsection
 
 @section('content')
-<div class="row">
-    @include('admin.layouts.sidebar')
-    <div class="col-md-9">
-        <div class="row mt-2">
+@include('admin.layouts.sidebar')
+<div class="col-md-9">
+    <div class="row mt-2">
             <div class="col-md-12">
                 <!-- Header Card -->
                 <div class="card border-0 shadow-sm mb-3">
@@ -169,34 +168,25 @@
                                                 @endif
                                             </td>
                                             <td class="text-center">
-                                                <div class="dropdown">
-                                                    <button class="btn btn-sm btn-outline-secondary dropdown-toggle"
-                                                            type="button"
-                                                            data-bs-toggle="dropdown">
-                                                        <i class="fas fa-ellipsis-v"></i>
-                                                    </button>
-                                                    <ul class="dropdown-menu dropdown-menu-end shadow-sm">
-                                                        <li>
-                                                            <a class="dropdown-item" href="{{ route('admin.orders.show', $order->order_id) }}">
-                                                                <i class="fas fa-eye me-2"></i>Xem chi tiết
-                                                            </a>
-                                                        </li>
-                                                        @if (!$order->delivered_at)
-                                                            <li>
-                                                                <a class="dropdown-item" href="{{route('admin.orders.update', $order->order_id)}}">
-                                                                    <i class="fas fa-check me-2"></i>Xác nhận giao
-                                                                </a>
-                                                            </li>
-                                                        @endif
-                                                        <li><hr class="dropdown-divider"></li>
-                                                        <li>
-                                                            <a class="dropdown-item text-danger"
-                                                               href="#"
-                                                               onclick="deleteItem({{$order->order_id}}); return false;">
-                                                                <i class="fas fa-trash me-2"></i>Xóa đơn
-                                                            </a>
-                                                        </li>
-                                                    </ul>
+                                                <div class="btn-group" role="group">
+                                                    <a href="{{ route('admin.orders.show', $order->order_id) }}"
+                                                       class="btn btn-sm btn-outline-primary"
+                                                       title="Xem chi tiết">
+                                                        <i class="fas fa-eye"></i>
+                                                    </a>
+                                                    @if (!$order->delivered_at)
+                                                        <a href="{{route('admin.orders.update', $order->order_id)}}"
+                                                           class="btn btn-sm btn-outline-success"
+                                                           title="Xác nhận giao">
+                                                            <i class="fas fa-check"></i>
+                                                        </a>
+                                                    @endif
+                                                    <a href="#"
+                                                       onclick="deleteItem({{$order->order_id}}); return false;"
+                                                       class="btn btn-sm btn-outline-danger"
+                                                       title="Xóa đơn">
+                                                        <i class="fas fa-trash"></i>
+                                                    </a>
                                                 </div>
                                                 <form id="{{$order->order_id}}"
                                                       action="{{route('admin.orders.delete', $order->order_id)}}"
