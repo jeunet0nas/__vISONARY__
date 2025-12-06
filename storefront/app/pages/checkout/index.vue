@@ -18,7 +18,6 @@
 <script setup>
 import PageHeader from "~/components/shared/PageHeader.vue";
 
-// Bảo vệ route - chỉ cho phép user đã login
 definePageMeta({
   middleware: "auth",
 });

@@ -305,43 +305,29 @@ const handleSubmit = async () => {
       .join(", ");
 
     const orderPayload = {
-      user_id: isLoggedIn.value ? user.value.id : null,
-      customer_name: formData.value.fullName,
-      customer_email: formData.value.email,
       customer_phone: formData.value.phone_number,
       shipping_address: fullAddress,
-
-      shipping_details: {
-        city: formData.value.city,
-        province: formData.value.province,
-        address: formData.value.address,
-        phone_number: formData.value.phone_number,
-      },
-
       items: cartStore.items.map((item) => ({
         product_id: item.product.id,
         quantity: item.quantity,
         price: item.product.price,
       })),
-
       subtotal: cartStore.subtotal,
       discount_amount: cartStore.discountAmount,
-      coupon_code: cartStore.appliedCoupon
-        ? cartStore.appliedCoupon.code
-        : null,
+      coupon_code: cartStore.appliedCoupon?.code || null,
       total_amount: cartStore.finalSubtotal,
       payment_method: formData.value.paymentMethod,
     };
 
     console.log("--- SENDING PAYLOAD ---", orderPayload);
 
-    // Gọi API (Chỉ 1 lần gọi)
-    const config = isLoggedIn.value
-      ? headersConfig(authStore.access_token)
-      : {};
-    const res = await axios.post(`${BASE_URL}/orders`, orderPayload, config);
+    const res = await axios.post(
+      `${BASE_URL}/store/order`,
+      orderPayload,
+      headersConfig(authStore.access_token)
+    );
 
-    alert("Đặt hàng thành công! Mã đơn: " + res.data.order_code);
+    alert(`Đặt hàng thành công! Đơn hàng #${res.data.order_id}`);
     cartStore.$reset();
     router.push("/profile/orders");
   } catch (error) {
