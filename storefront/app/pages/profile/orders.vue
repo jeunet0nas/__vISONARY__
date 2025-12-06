@@ -114,7 +114,7 @@
               "Hãy thử chọn cho bạn 1 diện mạo mới."
             </p>
             <NuxtLink
-              to="/catalog"
+              to="/category"
               class="inline-block bg-black text-white border border-black px-8 py-3 text-xs font-black uppercase tracking-widest hover:bg-white hover:text-black transition-all shadow-[4px_4px_0px_0px_rgba(150,150,150,1)]"
             >
               Mua sắm ngay
@@ -194,21 +194,34 @@
               <div
                 v-for="(item, idx) in selectedOrder.items"
                 :key="idx"
-                class="group flex justify-between items-start pb-3 border-b border-gray-100 last:border-0"
+                class="group flex gap-3 pb-3 border-b border-gray-100 last:border-0"
               >
-                <div class="flex-1 pr-4">
+                <!-- <div class="shrink-0">
+                  <img
+                    :src="`http://127.0.0.1:8000/${item.thumbnail}`"
+                    :alt="item.product_name"
+                    class="w-16 h-16 object-cover border-2 border-black"
+                  />
+                </div> -->
+                <div class="flex-1 min-w-0 pr-2">
                   <NuxtLink
-                    :to="`/products/${item.slug}`"
-                    class="font-bold text-sm text-gray-800 uppercase group-hover:underline decoration-2 decoration-black underline-offset-2 transition-all"
+                    :to="`/products/${item.product_slug}`"
+                    class="font-bold text-sm text-gray-800 uppercase group-hover:underline decoration-2 decoration-black underline-offset-2 transition-all block"
                   >
                     {{ item.product_name }}
                   </NuxtLink>
-                  <div class="text-xs text-gray-500 mt-1 font-mono">
-                    {{ formatPrice(item.price) }} x {{ item.quantity }}
+                  <div
+                    class="text-xs text-gray-500 mt-1 font-mono flex items-center gap-1"
+                  >
+                    <span>{{ formatPrice(item.price) }}</span>
+                    <span class="text-gray-400">×</span>
+                    <span class="font-semibold">{{ item.quantity }}</span>
                   </div>
                 </div>
-                <div class="font-bold font-mono text-gray-700 text-sm">
-                  {{ formatPrice(item.subtotal) }}
+                <div class="shrink-0 text-right">
+                  <div class="font-bold font-mono text-gray-700 text-sm">
+                    {{ formatPrice(item.subtotal) }}
+                  </div>
                 </div>
               </div>
             </div>
@@ -271,7 +284,6 @@ import axios from "axios";
 import { BASE_URL, headersConfig } from "~/helpers/config";
 import { formatDate, formatPrice } from "~/utils/format";
 import PageHeader from "~/components/shared/PageHeader.vue";
-import auth from "~/middleware/auth";
 
 const authStore = useAuthStore();
 const { isLoggedIn } = storeToRefs(authStore);

@@ -22,8 +22,11 @@ class OrderController extends Controller
             ], 401);
         }
 
-        $orders = Order::where('customer_id', $user->customer_id)->with(['products', 'coupon'])
-->orderBy('created_at', 'desc')->get()->map(function ($order) {
+        $orders = Order::where('customer_id', $user->customer_id)
+            ->with(['products', 'coupon', 'customer'])
+            ->orderBy('created_at', 'desc')
+            ->get()
+            ->map(function ($order) {
                 return [
                     'id' => $order->order_id,
                     'total_amount' => $order->grand_total,
@@ -32,13 +35,24 @@ class OrderController extends Controller
                     'payment_method' => strtolower($order->payment_method),
                     'payment_status' => $order->payment_status,
                     'shipping_address' => $order->shipping_add,
+                    'order_phone' => $order->order_phone,
+                    'customer_name' => $order->customer->customer_name,
+                    'customer_email' => $order->customer->email,
                     'created_at' => $order->created_at,
+                    'delivered_at' => $order->delivered_at,
                     'status' => $order->payment_status,
-                    'status_label' => $order->payment_status === 'completed' ? 'Giao thành công' : 'Đang xử lý',
+                    'status_label' => match($order->payment_status) {
+                        'completed', 'paid' => 'Giao thành công',
+                        'pending' => 'Đang xử lý',
+                        'cancelled' => 'Đã hủy',
+                        default => 'Không xác định'
+                    },
                     'items' => $order->products->map(function ($product) {
                         return [
+                            'product_id' => $product->product_id,
                             'product_name' => $product->product_name,
-                            'slug' => $product->slug,
+                            'product_slug' => $product->slug,
+                            'thumbnail' => $product->thumbnail,
                             'quantity' => $product->pivot->item_qty,
                             'price' => $product->pivot->item_price,
                             'subtotal' => $product->pivot->item_subtotal,
@@ -115,9 +129,9 @@ class OrderController extends Controller
                 $itemSubtotal = $item['price'] * $item['quantity'];
 
                 $order->products()->attach($product->product_id, [
-                    'item_price' => $item['price'],          // Giá gốc tại thời điểm đặt
+                    'item_price' => $item['price'],
                     'item_qty' => $item['quantity'],
-                    'item_subtotal' => $itemSubtotal,        // Tổng tiền từng item
+                    'item_subtotal' => $itemSubtotal,
                 ]);
 
                 // Trừ tồn kho
