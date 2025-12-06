@@ -28,18 +28,21 @@ class Order extends Model
     }
 
     public function customer(){
-        $this->belongsTo(User::class, 'customer_id', 'customer_id');
+        return $this->belongsTo(User::class, 'customer_id', 'customer_id');
     }
 
     public function coupon(){
-        $this->belongsTo(Coupon::class, 'coupon_id', 'coupon_id');
+        return $this->belongsTo(Coupon::class, 'coupon_id', 'coupon_id');
     }
 
     public function products(){
-        return $this->belongsToMany(Product::class, 'order_product', 'order_id', 'product_id')->withPivot('item_price', 'item_qty');
+        return $this->belongsToMany(Product::class, 'order_product', 'order_id', 'product_id')
+            ->withPivot('item_price', 'item_qty', 'item_subtotal')
+            ->withTimestamps();
     }
 
-    public function getCreatedAtAttribute($value){
-        return Carbon::parse($value)->diffForHumans();
-    }
+    // Giữ nguyên created_at format gốc cho API
+    // public function getCreatedAtAttribute($value){
+    //     return Carbon::parse($value)->diffForHumans();
+    // }
 }

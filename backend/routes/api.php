@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\Api\CollectionController;
 use App\Http\Controllers\Api\CouponController;
+use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Resources\UserResource;
@@ -18,6 +20,9 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::put('user/profile/update', [UserController::class, 'UpdateUserProfile']);
 
     Route::post('apply/coupon', [CouponController::class, 'applyCoupon']);
+
+    Route::get('orders', [OrderController::class, 'index']);
+    Route::post('store/order', [OrderController::class, 'store']);
 });
 
 
@@ -25,6 +30,9 @@ Route::get('products', [ProductController::class, 'index']);
 Route::get('products/{searchTerm}/find', [ProductController::class, 'findProductsByTerm']);
 Route::get('products/{collection}/collection', [ProductController::class, 'filterProductsByCollection']);
 Route::get('products/{product}/show', [ProductController::class, 'show']);
+
+Route::get('collections', [CollectionController::class, 'index']);
+Route::get('collections/{collection}/show', [CollectionController::class, 'show']);
 
 Route::post('user/register', [UserController::class, 'store']);
 Route::post('user/login', [UserController::class, 'auth']);
