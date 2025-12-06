@@ -24,7 +24,12 @@
         <div
           class="w-full lg:w-2/3 p-6 lg:p-12 flex items-center justify-center"
         >
-          <div class="grid grid-cols-2 gap-2 md:gap-4 max-w-md">
+          <TheLoader
+            v-if="productsStore.isLoading"
+            variant="section"
+            text="FETCHING DATA..."
+          />
+          <div v-else class="grid grid-cols-2 gap-2 md:gap-4 max-w-md">
             <ProductCard
               v-for="product in newArrivals"
               :key="product.product_id"
@@ -48,6 +53,7 @@
 
 <script setup>
 import ProductCard from "~/components/product/ProductCard.vue";
+import TheLoader from "~/components/shared/TheLoader.vue";
 import { useProductsStore } from "~/stores/useProductsStore";
 
 const productsStore = useProductsStore();

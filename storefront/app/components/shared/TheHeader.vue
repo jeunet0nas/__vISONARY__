@@ -10,7 +10,8 @@
             ALL
           </NuxtLink>
           <NuxtLink
-            to="/collections/jentle-salon"
+            v-if="collectionsStore.collections.length"
+            :to="`/collections/${collectionsStore.collections[0].slug}`"
             class="text-xs lg:text-sm font-medium tracking-wider uppercase transition-colors hover:text-gray-500 text-black"
           >
             COLL.
@@ -82,14 +83,22 @@
 
 <script setup>
 import { useCartStore } from "~/stores/useCartStore";
+import { useCollectionsStore } from "~/stores/useCollectionsStore";
 import { useAuthStore } from "~/stores/useAuthStore";
 import { headersConfig, BASE_URL } from "~/helpers/config";
 import axios from "axios";
 
 const cartStore = useCartStore();
 const authStore = useAuthStore();
+const collectionsStore = useCollectionsStore();
 const toast = useToast();
 const router = useRouter();
+
+onMounted(() => {
+  if (!collectionsStore.collections.length) {
+    collectionsStore.fetchCollections();
+  }
+});
 
 const handleLogout = async () => {
   try {
