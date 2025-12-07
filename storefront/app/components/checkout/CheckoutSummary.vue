@@ -26,10 +26,20 @@
         <span>{{ formatPrice(shippingCost) }}</span>
       </div>
 
-      <div v-if="cartStore.appliedCoupon" class="flex justify-between text-lg">
-        <span class="font-semibold uppercase flex items-center">
-          DISCOUNT - {{ cartStore.appliedCoupon.code }}
-          <button @click="cartStore.removeCoupon" class="ml-2">[X]</button>
+      <div
+        v-if="cartStore.appliedCoupon"
+        class="flex justify-between text-lg text-green-700 font-semibold"
+      >
+        <span class="uppercase flex items-center gap-2">
+          <span>✓</span>
+          <span>DISCOUNT - {{ cartStore.appliedCoupon.code }}</span>
+          <button
+            @click="cartStore.removeCoupon"
+            class="ml-2 text-red-600 hover:text-red-800 transition-colors"
+            title="Xóa mã giảm giá"
+          >
+            [X]
+          </button>
         </span>
         <span>-{{ formatPrice(cartStore.discountAmount) }}</span>
       </div>

@@ -59,11 +59,14 @@
                 {{ formatPrice(cartStore.subtotal) }}
               </span>
             </div>
-            <button
-              class="w-full bg-black text-white p-4 font-semibold uppercase"
+
+            <NuxtLink
+              to="/checkout"
+              class="w-full bg-black text-white p-4 font-semibold uppercase flex items-center justify-center"
+              @click="cartStore.closeCart"
             >
               CHECKOUT NOW
-            </button>
+            </NuxtLink>
           </footer>
         </div>
       </div>

@@ -8,7 +8,7 @@
         class="px-4 py-3 text-sm font-medium uppercase tracking-wider transition-colors"
         :class="getActiveClass(collection.slug)"
       >
-        {{ collection.name }}
+        {{ collection.collection_name }}
       </NuxtLink>
     </nav>
   </div>

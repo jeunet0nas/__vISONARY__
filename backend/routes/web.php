@@ -2,7 +2,10 @@
 
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\CollectionController;
+use App\Http\Controllers\Admin\CouponController;
+use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [AdminController::class, "login"])->name("admin.login");
@@ -33,4 +36,23 @@ Route::prefix('admin')->middleware('admin')->group(function(){
             'destroy' => 'admin.products.destroy'
         ]
     ]);
+
+    Route::resource('coupons', CouponController::class, [
+        'names' => [
+            'index' => 'admin.coupons.index',
+            'create' => 'admin.coupons.create',
+            'store' => 'admin.coupons.store',
+            'edit' => 'admin.coupons.edit',
+            'update' => 'admin.coupons.update',
+            'destroy' => 'admin.coupons.destroy'
+        ]
+    ]);
+
+    Route::get('orders', [OrderController::class, 'index'])->name('admin.orders.index');
+    Route::get('orders/{order}', [OrderController::class, 'show'])->name('admin.orders.show');
+    Route::get('orders/{order}/update', [OrderController::class, 'updateDeliveredDate'])->name('admin.orders.update');
+    Route::delete('orders/{order}', [OrderController::class, 'destroy'])->name('admin.orders.delete');
+
+    Route::get('users', [UserController::class, 'index'])->name('admin.users.index');
+    Route::delete('delete/{user}/user', [UserController::class, 'destroy'])->name('admin.users.delete');
 });

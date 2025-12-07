@@ -17,4 +17,8 @@
 
 <script setup>
 import PageHeader from "~/components/shared/PageHeader.vue";
+
+definePageMeta({
+  middleware: "auth",
+});
 </script>

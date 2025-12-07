@@ -11,11 +11,11 @@
 
     <section class="w-full lg:w-3/5 flex flex-col">
       <div
-        class="w-full lg:h-3/5 order-first lg:border-l lg:border-black flex flex-col lg:flex-row"
+        class="w-full lg:h-3/5 order-first lg:border-l lg:border-black flex flex-col lg:flex-row bg-black"
       >
         <div class="w-full lg:w-1/3 p-6 lg:p-12 flex items-center">
           <h2
-            class="text-3xl lg:text-5xl font-semibold uppercase tracking-wider"
+            class="text-3xl lg:text-5xl font-semibold uppercase tracking-wider bg-amber-50"
           >
             New Arrivals
           </h2>
@@ -24,20 +24,25 @@
         <div
           class="w-full lg:w-2/3 p-6 lg:p-12 flex items-center justify-center"
         >
-          <div class="grid grid-cols-2 gap-2 md:gap-4 max-w-md">
+          <TheLoader
+            v-if="productsStore.isLoading"
+            variant="section"
+            text="FETCHING DATA..."
+          />
+          <div v-else class="grid grid-cols-2 gap-2 md:gap-4 max-w-md">
             <ProductCard
               v-for="product in newArrivals"
-              :key="product.id"
+              :key="product.product_id"
               :product="product"
             />
           </div>
         </div>
       </div>
       <div
-        class="w-full lg:h-2/5 bg-black flex items-center justify-center p-12 order-last"
+        class="w-full lg:h-2/5 bg-white flex items-center justify-center p-12 order-last"
       >
         <blockquote
-          class="text-xl lg:text-4xl leading-relaxed uppercase font-semibold text-right text-white"
+          class="text-xl lg:text-4xl leading-relaxed uppercase font-semibold text-right"
         >
           "Not just eyewear. It’s a mainframe for your face."
         </blockquote>
@@ -47,39 +52,15 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
 import ProductCard from "~/components/product/ProductCard.vue";
+import TheLoader from "~/components/shared/TheLoader.vue";
+import { useProductsStore } from "~/stores/useProductsStore";
 
-const newArrivals = ref([
-  {
-    id: 1,
-    name: "Jennie - Wispy Y8",
-    price: 380000,
-    imageUrl: "https://via.placeholder.com/400x400/f0f0f0/333?text=Wispy+Y8",
-    slug: "jennie-wispy-y8",
-  },
-  {
-    id: 2,
-    name: "Jennie - Jem",
-    price: 420000,
-    imageUrl: "https://via.placeholder.com/400x400/f0f0f0/333?text=Jem",
-    slug: "jennie-jem",
-  },
-  {
-    id: 3,
-    name: "Jennie - Wispy GR8",
-    price: 380000,
-    imageUrl: "https://via.placeholder.com/400x400/f0f0f0/333?text=Wispy+GR8",
-    slug: "jennie-wispy-gr8",
-  },
-  {
-    id: 4,
-    name: "Sản phẩm 4",
-    price: 500000,
-    imageUrl: "https://via.placeholder.com/400x400/f0f0f0/333?text=Sản+phẩm+4",
-    slug: "san-pham-4",
-  },
-]);
+const productsStore = useProductsStore();
+const newArrivals = computed(() => productsStore.products.slice(0, 4));
+onMounted(() => {
+  productsStore.fetchAllProducts();
+});
 
 useHead({
   title: "VISIONARY - Trang chủ",

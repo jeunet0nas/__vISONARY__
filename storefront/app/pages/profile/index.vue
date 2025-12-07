@@ -126,10 +126,10 @@ const handleLogout = async () => {
 
 onMounted(() => {
   authStore.clearValidationErrors();
+});
 
-  if (!authStore.isLoggedIn) {
-    router.push("/login");
-  }
+definePageMeta({
+  middleware: "auth",
 });
 
 useHead({
