@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AuthUserRequest;
+use App\Http\Requests\ChangePasswordRequest;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
@@ -81,5 +82,20 @@ class UserController extends Controller
                 'user' => UserResource::make($req->user())
             ]);
         }
+    }
+
+    public function changePassword(ChangePasswordRequest $req){
+        $user = $req->user();
+        if (!Hash::check($req->current_password, $user->password)) {
+            return response()->json([
+                'error' => 'Mật khẩu hiện tại không đúng!'
+            ], 422);
+        }
+        $user->update([
+            'password' => Hash::make($req->new_password)
+        ]);
+        return response()->json([
+            'message' => 'Đổi mật khẩu thành công!'
+        ]);
     }
 }
