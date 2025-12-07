@@ -19,9 +19,9 @@ class CollectionController extends Controller
         if(!$collection){
             abort(404);
         } else{
-            return CollectionResource::make([
+            return CollectionResource::make(
                 $collection->load(['products'])
-            ]);
+            );
         }
     }
 }
