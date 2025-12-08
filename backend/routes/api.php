@@ -22,9 +22,17 @@ Route::middleware('auth:sanctum')->group(function(){
 
     Route::post('apply/coupon', [CouponController::class, 'applyCoupon']);
 
+    // Order routes
     Route::get('orders', [OrderController::class, 'index']);
     Route::post('store/order', [OrderController::class, 'store']);
+
+    // Stripe payment routes
+    Route::post('stripe/create-checkout', [OrderController::class, 'createStripeCheckout']);
+    Route::post('stripe/verify-session', [OrderController::class, 'verifyStripeSession']);
 });
+
+// Stripe webhook (KHÔNG dùng auth:sanctum vì Stripe gọi trực tiếp)
+Route::post('stripe/webhook', [OrderController::class, 'handleStripeWebhook']);
 
 
 
