@@ -48,13 +48,13 @@
             </div>
 
             <div v-else class="text-center p-10 text-black">
-              <p>Your bag is empty.</p>
+              <p>Giỏ hàng của bạn đang trống</p>
             </div>
           </div>
 
           <footer class="p-4 border-t border-black">
             <div class="flex justify-between items-center mb-4 text-black">
-              <span class="font-semibold uppercase">SUBTOTAL</span>
+              <span class="font-semibold uppercase">Tạm tính</span>
               <span class="font-semibold">
                 {{ formatPrice(cartStore.subtotal) }}
               </span>
@@ -65,7 +65,7 @@
               class="w-full bg-black text-white p-4 font-semibold uppercase flex items-center justify-center"
               @click="cartStore.closeCart"
             >
-              CHECKOUT NOW
+              THANH TOÁN
             </NuxtLink>
           </footer>
         </div>

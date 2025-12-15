@@ -180,6 +180,50 @@
             Thanh toán qua QR / Banking
           </span>
         </label>
+
+        <label
+          class="flex items-center border p-4 cursor-pointer transition-colors hover:border-blue-500"
+          :class="{
+            'border-blue-600 bg-blue-50': formData.paymentMethod === 'stripe',
+            'border-gray-300': formData.paymentMethod !== 'stripe',
+          }"
+        >
+          <input
+            type="radio"
+            v-model="formData.paymentMethod"
+            value="stripe"
+            class="peer hidden"
+          />
+          <span
+            class="w-5 h-5 mr-3 border-2 rounded-none flex items-center justify-center transition-colors"
+            :class="
+              formData.paymentMethod === 'stripe'
+                ? 'border-blue-600 bg-blue-600'
+                : 'border-gray-300 bg-white'
+            "
+          >
+            <span
+              class="block w-2.5 h-2.5 bg-white transition-opacity"
+              :class="
+                formData.paymentMethod === 'stripe'
+                  ? 'opacity-100'
+                  : 'opacity-0'
+              "
+            ></span>
+          </span>
+          <div class="flex items-center gap-2">
+            <span
+              class="font-medium transition-colors"
+              :class="
+                formData.paymentMethod === 'stripe'
+                  ? 'text-blue-600'
+                  : 'text-gray-600'
+              "
+            >
+              Thanh toán qua Stripe
+            </span>
+          </div>
+        </label>
       </div>
     </div>
 
@@ -249,6 +293,7 @@ const cartStore = useCartStore();
 const authStore = useAuthStore();
 const { user, isLoggedIn } = storeToRefs(authStore);
 const router = useRouter();
+const toast = useToast();
 
 const isLoading = ref(false);
 const couponCode = ref("");
@@ -321,20 +366,48 @@ const handleSubmit = async () => {
 
     console.log("--- SENDING PAYLOAD ---", orderPayload);
 
+    // Xử lý Stripe payment
+    if (formData.value.paymentMethod === "stripe") {
+      const res = await axios.post(
+        `${BASE_URL}/stripe/create-checkout`,
+        orderPayload,
+        headersConfig(authStore.access_token)
+      );
+
+      if (res.data.success && res.data.checkout_url) {
+        // Redirect đến Stripe Checkout
+        console.log("Redirecting to Stripe:", res.data.checkout_url);
+        window.location.href = res.data.checkout_url;
+        return; // Không clear cart ở đây, sẽ clear sau khi thanh toán thành công
+      } else {
+        throw new Error("Không thể tạo Stripe checkout session");
+      }
+    }
+
+    // Xử lý COD/QR payment (existing logic)
     const res = await axios.post(
       `${BASE_URL}/store/order`,
       orderPayload,
       headersConfig(authStore.access_token)
     );
 
-    alert(`Đặt hàng thành công! Đơn hàng #${res.data.order_id}`);
+    toast.add({
+      title: "Mua hàng thành công!",
+      description: "Đơn hàng của bạn đã được ghi nhận, hãy kiểm tra!",
+      color: "success",
+    });
+
     cartStore.$reset();
     router.push("/profile/orders");
   } catch (error) {
     console.error(error);
     const msg =
       error.response?.data?.message || "Có lỗi xảy ra, vui lòng thử lại.";
-    alert(msg);
+    toast.add({
+      title: "Đã có lỗi xảy ra!",
+      description: msg,
+      color: "error",
+    });
   } finally {
     isLoading.value = false;
   }

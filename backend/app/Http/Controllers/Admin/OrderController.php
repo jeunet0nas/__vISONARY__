@@ -23,7 +23,7 @@ class OrderController extends Controller
 
         }
 
-        $orders = $query->with('customer', 'coupon')->get();
+        $orders = $query->with('customer', 'coupon')->latest()->get();
         return view('admin.orders.index')->with([
             'orders' => $orders
         ]);
@@ -35,7 +35,7 @@ class OrderController extends Controller
             'payment_status' => 'paid'
         ]);
         return redirect()->route('admin.orders.index')->with([
-            'success' => 'Đơn hàng đã được giao thành công'
+            'success' => 'Đơn hàng đã ghi nhận giao thành công'
         ]);
     }
 

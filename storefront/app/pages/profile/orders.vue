@@ -160,7 +160,7 @@
                 >
                 <span
                   :class="
-                    selectedOrder.status === 'completed'
+                    selectedOrder.delivered_at
                       ? 'text-green-700'
                       : 'text-blue-700'
                   "
@@ -250,7 +250,7 @@
                   class="font-black text-gray-800 uppercase text-lg tracking-tighter"
                   >Tổng cộng</span
                 >
-                <span class="font-black text-2xl text-red-700 tracking-tight">
+                <span class="font-black text-2xl text-black tracking-tight">
                   {{ formatPrice(selectedOrder.total_amount) }}
                 </span>
               </div>

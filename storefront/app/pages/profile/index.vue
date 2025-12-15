@@ -1,4 +1,5 @@
 <template>
+  <PageHeader title="__your's info__" />
   <main class="min-h-screen bg-white text-black pt-24 pb-20">
     <div class="container mx-auto px-4 max-w-6xl">
       <div
@@ -26,6 +27,7 @@ import { onMounted } from "vue";
 import { storeToRefs } from "pinia";
 import Sidebar from "~/components/profile/Sidebar.vue";
 import InfoForm from "~/components/profile/InfoForm.vue";
+import PageHeader from "~/components/shared/PageHeader.vue";
 import { useAuthStore } from "~/stores/useAuthStore";
 import axios from "axios";
 import { BASE_URL, headersConfig } from "~/helpers/config";
