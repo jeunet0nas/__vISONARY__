@@ -132,6 +132,7 @@
         handleImageInputChanged('second_img', 'second_img_preview')
         handleImageInputChanged('third_img', 'third_img_preview')
         handleImageInputChanged('fourth_img', 'fourth_img_preview')
+        handleImageInputChanged('banner_img', 'banner_img_preview')
     </script>
     @yield('scripts')
 </html>

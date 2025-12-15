@@ -30,12 +30,15 @@
 
     <div class="space-y-2">
       <p class="text-sm leading-relaxed">{{ props.product.product_desc }}</p>
-      <a href="#" class="text-sm font-bold underline inline-block">Read more</a>
     </div>
 
     <div class="space-y-2 mt-6">
-      <p class="font-semibold uppercase text-sm">DETAILS</p>
-      <p class="font-semibold uppercase text-sm">SIZE AND FIT</p>
+      <p class="font-semibold uppercase text-sm">
+        Kiểu dáng : {{ props.product.shape }}
+      </p>
+      <p class="font-semibold uppercase text-sm">
+        Chất liệu : {{ props.product.material }}
+      </p>
     </div>
 
     <div class="border border-black p-4 mt-6 space-y-4 bg-white">
@@ -47,7 +50,7 @@
           "
           class="w-full bg-black text-white p-4 font-semibold uppercase hover:bg-gray-800 disabled:bg-gray-300 disabled:cursor-not-allowed"
         >
-          ADD TO BAG
+          THÊM VÀO GIỎ
         </button>
       </div>
     </div>
@@ -55,7 +58,6 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
 import { useCartStore } from "~/stores/useCartStore";
 import { formatPrice } from "../../utils/format";
 

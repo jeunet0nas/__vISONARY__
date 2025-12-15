@@ -222,7 +222,6 @@
             >
               Thanh toán qua Stripe
             </span>
-            <span class="text-xs text-gray-500">(Credit/Debit Card)</span>
           </div>
         </label>
       </div>
@@ -294,6 +293,7 @@ const cartStore = useCartStore();
 const authStore = useAuthStore();
 const { user, isLoggedIn } = storeToRefs(authStore);
 const router = useRouter();
+const toast = useToast();
 
 const isLoading = ref(false);
 const couponCode = ref("");
@@ -391,14 +391,23 @@ const handleSubmit = async () => {
       headersConfig(authStore.access_token)
     );
 
-    alert(`Đặt hàng thành công! Đơn hàng #${res.data.order_id}`);
+    toast.add({
+      title: "Mua hàng thành công!",
+      description: "Đơn hàng của bạn đã được ghi nhận, hãy kiểm tra!",
+      color: "success",
+    });
+
     cartStore.$reset();
     router.push("/profile/orders");
   } catch (error) {
     console.error(error);
     const msg =
       error.response?.data?.message || "Có lỗi xảy ra, vui lòng thử lại.";
-    alert(msg);
+    toast.add({
+      title: "Đã có lỗi xảy ra!",
+      description: msg,
+      color: "error",
+    });
   } finally {
     isLoading.value = false;
   }

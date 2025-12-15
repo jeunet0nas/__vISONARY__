@@ -47,16 +47,8 @@
                 class="text-xs lg:text-sm font-bold tracking-wider uppercase text-black hover:underline truncate max-w-20 lg:max-w-[120px]"
                 :title="authStore.user.customer_name"
               >
-                <Icon name="uil:github" style="color: black" />
+                <Icon name="uil:user" style="color: black" />
               </NuxtLink>
-
-              <button
-                type="button"
-                @click="handleLogout"
-                class="text-xs lg:text-sm font-medium tracking-wider uppercase transition-colors hover:text-red-600 text-gray-500"
-              >
-                [Logout]
-              </button>
             </div>
 
             <NuxtLink

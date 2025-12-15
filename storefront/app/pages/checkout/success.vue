@@ -11,7 +11,9 @@
             class="w-16 h-16 border-4 border-black border-t-transparent rounded-full animate-spin"
           ></div>
         </div>
-        <h2 class="text-xl font-bold uppercase mb-2">Đang xác thực...</h2>
+        <h2 class="text-xl font-bold uppercase mb-2 text-black">
+          Đang tải thông tin
+        </h2>
         <p class="text-gray-600">Vui lòng đợi trong giây lát</p>
         <p v-if="retryCount > 0" class="text-sm text-gray-500 mt-2">
           Đang xử lý ({{ retryCount }}/{{ maxRetries }})
@@ -21,7 +23,7 @@
       <!-- Success State -->
       <div
         v-else-if="paymentSuccess"
-        class="bg-white border-4 border-green-600 p-8"
+        class="bg-white border-4 border-black p-8"
       >
         <div class="text-center mb-6">
           <div
@@ -53,7 +55,7 @@
         >
           <div class="flex justify-between text-sm">
             <span class="text-gray-600">Mã đơn hàng:</span>
-            <span class="font-bold">#{{ orderInfo.id }}</span>
+            <span class="font-bold text-black">#{{ orderInfo.id }}</span>
           </div>
           <div class="flex justify-between text-sm">
             <span class="text-gray-600">Trạng thái:</span>
@@ -65,21 +67,16 @@
           </div>
           <div class="flex justify-between text-sm">
             <span class="text-gray-600">Tổng tiền:</span>
-            <span class="font-bold text-lg"
+            <span class="font-bold text-lg text-black"
               >{{ formatPrice(orderInfo.total) }}đ</span
             >
           </div>
           <div class="flex justify-between text-sm">
             <span class="text-gray-600">Khách hàng:</span>
-            <span class="font-medium">{{ orderInfo.customer_name }}</span>
+            <span class="font-medium text-black">{{
+              orderInfo.customer_name
+            }}</span>
           </div>
-        </div>
-
-        <div class="bg-blue-50 border-2 border-blue-200 p-4 mb-6">
-          <p class="text-sm text-blue-800">
-            <span class="font-semibold">📧 Email xác nhận</span> đã được gửi đến
-            địa chỉ email của bạn.
-          </p>
         </div>
 
         <div class="space-y-3">

@@ -44,12 +44,9 @@ class OrderController extends Controller
                     'created_at' => $order->created_at,
                     'delivered_at' => $order->delivered_at,
                     'status' => $order->payment_status,
-                    'status_label' => match($order->payment_status) {
-                        'completed', 'paid' => 'Giao thành công',
-                        'pending' => 'Đang xử lý',
-                        'cancelled' => 'Đã hủy',
-                        default => 'Không xác định'
-                    },
+                    'status_label' => is_null($order->delivered_at)
+                        ? 'Đang vận chuyển'
+                        : 'Giao thành công',
                     'items' => $order->products->map(function ($product) {
                         return [
                             'product_id' => $product->product_id,

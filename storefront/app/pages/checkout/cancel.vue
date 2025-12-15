@@ -1,9 +1,9 @@
 <template>
   <div class="min-h-screen bg-gray-50 flex items-center justify-center p-4">
-    <div class="max-w-md w-full bg-white border-4 border-yellow-500 p-8">
+    <div class="max-w-md w-full bg-white border-4 border-black p-8">
       <div class="text-center mb-6">
         <div
-          class="inline-flex items-center justify-center w-20 h-20 bg-yellow-500 rounded-full mb-4"
+          class="inline-flex items-center justify-center w-20 h-20 bg-red-500 rounded-full mb-4"
         >
           <svg
             class="w-12 h-12 text-white"
@@ -19,18 +19,17 @@
             ></path>
           </svg>
         </div>
-        <h1 class="text-2xl font-bold uppercase text-yellow-600 mb-2">
+        <h1 class="text-2xl font-bold uppercase text-red-500 mb-2">
           Thanh toán đã hủy
         </h1>
         <p class="text-gray-600 mb-4">Bạn đã hủy quá trình thanh toán</p>
       </div>
 
-      <div class="bg-yellow-50 border-2 border-yellow-200 p-4 mb-6">
-        <p class="text-sm text-yellow-800 mb-2">
-          <span class="font-semibold">⚠️ Lưu ý:</span>
+      <div class="bg-red-100 border-2 border-red-500 p-4 mb-6">
+        <p class="text-sm text-black mb-2">
+          <span class="font-semibold">Một vài lưu ý:</span>
         </p>
-        <ul class="text-sm text-yellow-800 space-y-1 list-disc list-inside">
-          <li>Không có đơn hàng nào được tạo khi bạn hủy thanh toán</li>
+        <ul class="text-sm text-black space-y-1 list-disc list-inside">
           <li>Giỏ hàng của bạn vẫn được lưu</li>
           <li>Bạn có thể quay lại để thử thanh toán lại bất cứ lúc nào</li>
         </ul>
@@ -38,7 +37,7 @@
 
       <div class="border-t-2 border-gray-200 pt-4 mb-6">
         <p class="text-sm text-gray-600">
-          💡 <span class="font-semibold">Mẹo:</span> Kiểm tra lại thông tin thẻ
+          <span class="font-semibold">Mẹo:</span> Kiểm tra lại thông tin thẻ
           hoặc thử phương thức thanh toán khác
         </p>
       </div>
@@ -62,22 +61,6 @@
         >
           Về trang chủ
         </button>
-      </div>
-
-      <!-- Help Section -->
-      <div class="mt-8 pt-6 border-t-2 border-gray-200 text-center">
-        <p class="text-sm text-gray-600 mb-2">Cần hỗ trợ?</p>
-        <div class="flex justify-center gap-4 text-sm">
-          <a
-            href="mailto:support@visionary.com"
-            class="text-blue-600 hover:underline"
-          >
-            📧 Email
-          </a>
-          <a href="tel:1900xxxx" class="text-blue-600 hover:underline">
-            📞 Hotline
-          </a>
-        </div>
       </div>
     </div>
   </div>

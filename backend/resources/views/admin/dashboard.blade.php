@@ -232,115 +232,123 @@
         </div>
     </main>
 
-    {{-- Chart.js Scripts --}}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
+
     <script>
         // Revenue Chart (Line Chart)
         const revenueCtx = document.getElementById('revenueChart').getContext('2d');
-        const revenueChart = new Chart(revenueCtx, {
-            type: 'line',
-            data: {
-                labels: {!! $last7DaysLabels !!},
-                datasets: [{
-                    label: 'Doanh thu (VNĐ)',
-                    data: {!! $last7DaysRevenue !!},
-                    borderColor: 'rgb(75, 192, 192)',
-                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                    tension: 0.4,
-                    fill: true,
-                    pointRadius: 5,
-                    pointHoverRadius: 7,
-                    pointBackgroundColor: 'rgb(75, 192, 192)',
-                    pointBorderColor: '#fff',
-                    pointBorderWidth: 2
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        display: true,
-                        position: 'top',
-                    },
-                    tooltip: {
-                        callbacks: {
-                            label: function(context) {
-                                let label = context.dataset.label || '';
-                                if (label) {
-                                    label += ': ';
+        const last7DaysRevenue = {!! $last7DaysRevenue !!};
+        const last7DaysLabels = {!! $last7DaysLabels !!};
+
+        if (last7DaysRevenue && last7DaysLabels && last7DaysLabels.length > 0) {
+            const revenueChart = new Chart(revenueCtx, {
+                type: 'line',
+                data: {
+                    labels: last7DaysLabels,
+                    datasets: [{
+                        label: 'Doanh thu (VNĐ)',
+                        data: last7DaysRevenue,
+                        borderColor: 'rgb(75, 192, 192)',
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        tension: 0.4,
+                        fill: true,
+                        pointRadius: 5,
+                        pointHoverRadius: 7,
+                        pointBackgroundColor: 'rgb(75, 192, 192)',
+                        pointBorderColor: '#fff',
+                        pointBorderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'top',
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    label += new Intl.NumberFormat('vi-VN').format(context.parsed.y) + 'đ';
+                                    return label;
                                 }
-                                label += new Intl.NumberFormat('vi-VN').format(context.parsed.y) + 'đ';
-                                return label;
                             }
                         }
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        ticks: {
-                            callback: function(value) {
-                                return new Intl.NumberFormat('vi-VN', {
-                                    notation: 'compact',
-                                    compactDisplay: 'short'
-                                }).format(value) + 'đ';
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return new Intl.NumberFormat('vi-VN', {
+                                        notation: 'compact',
+                                        compactDisplay: 'short'
+                                    }).format(value) + 'đ';
+                                }
                             }
                         }
                     }
                 }
-            }
-        });
+            });
+        }
 
         // Orders Status Chart (Pie Chart)
         const statusCtx = document.getElementById('statusChart').getContext('2d');
         const ordersByStatus = {!! $ordersByStatus !!};
 
-        const statusLabels = Object.keys(ordersByStatus);
-        const statusData = Object.values(ordersByStatus);
+        if (ordersByStatus && Object.keys(ordersByStatus).length > 0) {
+            const statusLabels = Object.keys(ordersByStatus);
+            const statusData = Object.values(ordersByStatus);
 
-        // Color mapping for payment statuses
-        const statusColors = {
-            'pending': '#ffc107',
-            'paid': '#28a745',
-            'unpaid': '#dc3545',
-            'processing': '#17a2b8',
-            'cancelled': '#6c757d'
-        };
+            // Color mapping for payment statuses
+            const statusColors = {
+                'pending': '#ffc107',
+                'paid': '#28a745',
+                'unpaid': '#dc3545',
+                'processing': '#17a2b8',
+                'cancelled': '#6c757d'
+            };
 
-        const backgroundColors = statusLabels.map(status => statusColors[status] || '#6c757d');
+            const backgroundColors = statusLabels.map(status => statusColors[status] || '#6c757d');
 
-        const statusChart = new Chart(statusCtx, {
-            type: 'doughnut',
-            data: {
-                labels: statusLabels.map(s => s.charAt(0).toUpperCase() + s.slice(1)),
-                datasets: [{
-                    data: statusData,
-                    backgroundColor: backgroundColors,
-                    borderWidth: 2,
-                    borderColor: '#fff'
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'bottom',
-                    },
-                    tooltip: {
-                        callbacks: {
-                            label: function(context) {
-                                let label = context.label || '';
-                                let value = context.parsed || 0;
-                                let total = context.dataset.data.reduce((a, b) => a + b, 0);
-                                let percentage = ((value / total) * 100).toFixed(1);
-                                return label + ': ' + value + ' đơn (' + percentage + '%)';
+            const statusChart = new Chart(statusCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: statusLabels.map(s => s.charAt(0).toUpperCase() + s.slice(1)),
+                    datasets: [{
+                        data: statusData,
+                        backgroundColor: backgroundColors,
+                        borderWidth: 2,
+                        borderColor: '#fff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.label || '';
+                                    let value = context.parsed || 0;
+                                    let total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                    let percentage = ((value / total) * 100).toFixed(1);
+                                    return label + ': ' + value + ' đơn (' + percentage + '%)';
+                                }
                             }
                         }
                     }
                 }
-            }
-        });
+            });
+        }
     </script>
 @endsection
 

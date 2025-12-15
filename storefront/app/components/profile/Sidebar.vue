@@ -9,7 +9,7 @@
         <img
           :src="avatarPreview || user?.profile_img"
           alt="Avatar"
-          class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
+          class="w-full h-full object-cover"
         />
 
         <label
